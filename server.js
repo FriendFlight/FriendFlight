@@ -25,6 +25,7 @@ passport.use(new Auth0Strategy({
   function (accessToken, refreshToken, extraParams, profile, done) {
     //put db calls here
 
+
     done(null, profile)
   }));
 
@@ -54,7 +55,7 @@ app.get('/auth/callback', passport.authenticate('auth0',
 
 app.get('/auth/me', function (req, res) {
   if (!req.user)
-    return res.status(200).send({firstname: null});
+    return res.status(200).send("Default person: Joe");
   res.status(200).send(req.user);
 })
 
