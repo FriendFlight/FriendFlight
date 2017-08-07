@@ -8,8 +8,8 @@ export default class Login extends Component
   {
     return (
       <div className="login">
-        <a href="#">
-          <h1 id="login">Login</h1>
+        <a href="http://localhost:3001/auth">
+          <div id="login">Login</div>
         </a>
       </div>
     );
