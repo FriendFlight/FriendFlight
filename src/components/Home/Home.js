@@ -47,7 +47,7 @@ showDrive(){
         <h2>Intro stuff, two sentences</h2>
         <br />
         <br />
-        <Login />
+        <Login user= {this.state.user}/>
         <h1>Hey, thanks for logging in (name). Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
         <FlightInput show={this.showNotifications}/>
