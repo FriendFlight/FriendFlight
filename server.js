@@ -62,6 +62,10 @@ massive(config.connectionString).then(dbInstance => {
     req.logout();
     res.redirect('http://localhost:3000/');
   })
+
+  app.post('/api/flight', function (req, res) {
+    dbInstance.addTrip([req.body.flightNumber, req.body.currentUserID, true, true]).then((trip) => (res.status(200).send(trip)))
+  })
 })
 
 app.listen(config.port, console.log(`Listening on port ${config.port}...`))

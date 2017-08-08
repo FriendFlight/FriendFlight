@@ -14,15 +14,14 @@ VALUES ('1', 'Smitty', 'Werbenjagermanjensen', '8014445555', 'smittyapples@gmail
 DROP TABLE IF EXISTS Trip;
 
 CREATE TABLE Trip
-(trip_id bigint PRIMARY KEY,
+(trip_id serial PRIMARY KEY,
 flight_number text,
 person_id text,
 is_tracked boolean,
-get_notifications boolean,
 morning_of boolean);
 
-INSERT INTO Trip (trip_id, flight_number, person_id, is_tracked, get_notifications, morning_of)
-VALUES (1, 'A123', '1', true, true, true);
+INSERT INTO Trip (flight_number, person_id, is_tracked, morning_of)
+VALUES ('A123', '1', true, true);
 
 DROP TABLE IF EXISTS Driver;
 
