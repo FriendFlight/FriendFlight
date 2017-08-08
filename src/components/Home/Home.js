@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import axios from 'axios'
 import "./Home.css";
 
 import Login from './Login/Login';
@@ -12,11 +13,20 @@ constructor() {
   super() 
   this.state = {
     displayNotifications: 'none',
-    driveDisplay: 'none'
+    driveDisplay: 'none',
+    user: null
   }
   this.showNotifications = this.showNotifications.bind(this)
   this.showDrive = this.showDrive.bind(this)
 }
+
+componentDidMount(){
+  axios.get("/auth/me").then(response=>{
+    this.setState({user:response.data})
+  })
+    
+    console.log(this.state.user);
+} 
 
 showNotifications(){
   this.setState({
@@ -30,6 +40,7 @@ showDrive(){
 }
   render()
   {
+  console.log(this.state)
     return (
       <div className="home">
         <h1 id="title">Future logo</h1>
