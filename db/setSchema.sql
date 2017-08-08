@@ -26,10 +26,10 @@ VALUES ('A123', '1', true, true);
 DROP TABLE IF EXISTS Driver;
 
 CREATE TABLE Driver
-(driver_id bigint PRIMARY KEY,
+(driver_id serial PRIMARY KEY,
 person_id text,
 latitude float,
 longitude float);
 
-INSERT INTO Driver (driver_id, person_id, latitude, longitude)
-VALUES (1, '1', 40.741895, -73.989308);
+INSERT INTO Driver (person_id, latitude, longitude)
+VALUES ('1', 40.741895, -73.989308);

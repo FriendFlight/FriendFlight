@@ -66,6 +66,10 @@ massive(config.connectionString).then(dbInstance => {
   app.post('/api/flight', function (req, res) {
     dbInstance.addTrip([req.body.flightNumber, req.body.currentUserID, true, true]).then((trip) => (res.status(200).send(trip)))
   })
+
+  app.post('/api/location', function(req, res) {
+    dbInstance.addDriver([req.body.currentUserID, req.body.latitude, req.body.longitude]).then((driver) => (res.status(200).send(driver)))
+  })
 })
 
 app.listen(config.port, console.log(`Listening on port ${config.port}...`))
