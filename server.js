@@ -23,7 +23,6 @@ massive(config.connectionString).then(dbInstance => {
 
     function (accessToken, refreshToken, extraParams, profile, done) {
       //put db calls here
-      console.log(dbInstance);
       dbInstance.addPerson([profile.id, profile._json.given_name, profile._json.family_name, profile._json.email, ""])
 
 
@@ -40,12 +39,10 @@ massive(config.connectionString).then(dbInstance => {
   app.use(passport.session())
 
   passport.serializeUser(function (user, done) {
-    console.log('serializing', user)
     done(null, user)
   })
 
   passport.deserializeUser(function (user, done) {
-    console.log('deserializing', user)
     done(null, user)
   })
 
@@ -56,13 +53,14 @@ massive(config.connectionString).then(dbInstance => {
 
   app.get('/auth/me', function (req, res) {
     if (!req.user)
-      return res.status(200).send("Default person: Joe");
+      return res.status(200).send("");
+                        console.log("user", req.user)
     res.status(200).send(req.user);
   })
 
   app.get('/auth/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('http://localhost:3000/');
   })
 })
 
