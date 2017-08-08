@@ -14,7 +14,7 @@ constructor() {
   this.state = {
     displayNotifications: 'none',
     driveDisplay: 'none',
-    user: null
+    user: ""
   }
   this.showNotifications = this.showNotifications.bind(this)
   this.showDrive = this.showDrive.bind(this)
@@ -40,6 +40,18 @@ showDrive(){
 }
   render()
   {
+
+    const isLoggedIn = (
+      <div>
+        <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
+        <br />
+        <FlightInput show={this.showNotifications}/>
+        <br />
+        <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
+        <br />
+        <DriveDisplay display={this.state.driveDisplay}/>
+      </div>
+    )
   console.log(this.state)
     return (
       <div className="home">
@@ -48,13 +60,7 @@ showDrive(){
         <br />
         <br />
         <Login user= {this.state.user}/>
-        <h1>Hey, thanks for logging in (name). Lets get some details so that we can make your trip as easy as possible!</h1>
-        <br />
-        <FlightInput show={this.showNotifications}/>
-        <br />
-        <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
-        <br />
-        <DriveDisplay display={this.state.driveDisplay}/>
+        {this.state.user?isLoggedIn:null}
       </div>
     );
   }

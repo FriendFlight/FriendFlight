@@ -53,7 +53,7 @@ massive(config.connectionString).then(dbInstance => {
 
   app.get('/auth/me', function (req, res) {
     if (!req.user)
-      return res.status(200).send(null);
+      return res.status(200).send("");
                         console.log("user", req.user)
     res.status(200).send(req.user);
   })
