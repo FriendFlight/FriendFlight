@@ -5,7 +5,7 @@ export default class NotificationPref extends Component
   render()
   {
     return (
-      <div>
+      <div style={{'display': `${this.props.display}`}}>
         <h1>How would you like us to let you know when to leave?</h1>
         <h2>A messsage the morning of your trip</h2>
         <input type="checkbox" checked></input>
@@ -16,9 +16,8 @@ export default class NotificationPref extends Component
         <h2>Send an email?</h2>
         <input placeholder="Email@example.com"/>
         <br />
-        <button>Submit</button>
-        <h1>Awesome, weve got everything we need to make sure you leave on time!</h1>
-        <h1>We will be in touch!</h1>
+        <button onClick={this.props.show}>Submit</button>
+        
       </div>
     );
   }
