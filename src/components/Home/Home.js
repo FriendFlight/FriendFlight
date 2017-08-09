@@ -45,7 +45,7 @@ showDrive(){
       <div>
         <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
-        <FlightInput show={this.showNotifications}/>
+        <FlightInput user={this.state.user} show={this.showNotifications}/>
         <br />
         <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
         <br />

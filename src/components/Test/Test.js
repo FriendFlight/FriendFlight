@@ -4,7 +4,7 @@ import axios from 'axios'
 export default class Text extends Component {
 
   postTrip() {
-    axios.post('/api/flight', {flightNumber: 'X473', currentUserID: '1'}).then(response => console.log(response.data))
+    axios.post('/api/flight', {flightNumber: 'X473', arrivalDate: '2017-08-09', currentUserID: '1'}).then(response => console.log(response.data))
   }
 
   postDriverLocation() {

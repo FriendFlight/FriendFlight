@@ -16,12 +16,13 @@ DROP TABLE IF EXISTS Trip;
 CREATE TABLE Trip
 (trip_id serial PRIMARY KEY,
 flight_number text,
+arrival_date date,
 person_id text,
 is_tracked boolean,
 morning_of boolean);
 
-INSERT INTO Trip (flight_number, person_id, is_tracked, morning_of)
-VALUES ('A123', '1', true, true);
+INSERT INTO Trip (flight_number, arrival_date, person_id, is_tracked, morning_of)
+VALUES ('A123', '2017-08-08', '1', true, true);
 
 DROP TABLE IF EXISTS Driver;
 
