@@ -19,8 +19,11 @@ export default class Text extends Component {
     axios.put('/api/notification-pref', {tripID: 1, morningOfNotification: false}).then(response => console.log(response.data))
   }
 
-  render() {
+  sendText() {
+    axios.post('/api/send-text', {message: 'Hey Lenny, care for a coldie?'}).then(response => console.log(response.data))
+  }
 
+  render() {
     return(
       <div>
         <div>
@@ -34,6 +37,10 @@ export default class Text extends Component {
         <div>
           Update Trip
           <button onClick={this.updateNotificationPref}>Mada mada</button>
+        </div>
+        <div>
+          Send a Text
+          <button onClick={this.sendText}>Let the dargon become you</button>
         </div>
       </div>)
   }
