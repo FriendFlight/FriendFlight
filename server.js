@@ -111,4 +111,3 @@ massive(config.connectionString).then(dbInstance => {
 })
 
 app.listen(config.port, console.log(`Listening on port ${config.port}...`))
-

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from 'axios'
 import "./Home.css";
+import config from '../config'
 
 import Login from './Login/Login';
 import FlightInput from './FlightInput/FlightInput';
@@ -10,23 +11,24 @@ import NotificationPref from './NotificationPref/NotificationPref';
 export default class Home extends Component
 {
 constructor() {
-  super() 
+  super()
   this.state = {
     displayNotifications: 'none',
     driveDisplay: 'none',
-    user: ""
+    user: "",
+    flight:''
   }
-  this.showNotifications = this.showNotifications.bind(this)
-  this.showDrive = this.showDrive.bind(this)
+  this.showNotifications = this.showNotifications.bind(this);
+  this.showDrive = this.showDrive.bind(this);
+  this.flightAPI=this.flightAPI.bind(this);
 }
 
 componentDidMount(){
   axios.get("/auth/me").then(response=>{
     this.setState({user:response.data})
   })
-    
-    console.log(this.state.user);
-} 
+
+}
 
 showNotifications(){
   this.setState({
@@ -38,6 +40,31 @@ showDrive(){
     driveDisplay:'block'
   })
 }
+flightAPI(url)
+{
+  // axios.request({
+  //   url: url,
+  //   method: 'get',
+  //   headers: { 'Access-Control-Allow-Origin': '*' }
+  // })
+
+  axios.get(url)
+  .then(res =>
+    {
+    this.setState({
+      flight: res.data
+    });
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
+    .then(res=>
+    {
+      console.log("location", res.data);
+    })
+  })
+
+  // .then(){
+  //   axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${}=${}&arrival_time=${}&key=${}`)
+  // }
+}
   render()
   {
 
@@ -45,14 +72,14 @@ showDrive(){
       <div>
         <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
-        <FlightInput user={this.state.user} show={this.showNotifications}/>
+        <FlightInput user={this.state.user} show={this.showNotifications} flight={this.flightAPI}/>
         <br />
         <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
         <br />
         <DriveDisplay display={this.state.driveDisplay}/>
       </div>
     )
-  console.log(this.state)
+    console.log("flight", this.state.flight);
     return (
       <div className="home">
         <h1 id="title">Future logo</h1>
