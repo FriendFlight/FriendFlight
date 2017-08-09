@@ -3,6 +3,20 @@ import axios from 'axios'
 
 export default class Text extends Component {
 
+  constructor() {
+    super()
+    this.state = {
+      phoneNumber: '',
+      message: ''
+    }
+
+    this.sendText = this.sendText.bind(this)
+  }
+
+  componentWillMount() {
+    console.log(this)
+  }
+
   postTrip() {
     axios.post('/api/flight', {flightNumber: 'X473', arrivalDate: '2017-08-09', currentUserID: '1'}).then(response => console.log(response.data))
   }
@@ -20,7 +34,22 @@ export default class Text extends Component {
   }
 
   sendText() {
-    axios.post('/api/send-text', {message: 'Hey Lenny, care for a coldie?'}).then(response => console.log(response.data))
+    axios.post('/api/send-text', {phoneNumber: `+1${this.state.phoneNumber}`, message: this.state.message }).then(response => console.log(response.data))
+  }
+
+  handleNumberChange(value) {
+
+    this.setState({
+      phoneNumber: value,
+    })
+    console.log(this.state.phoneNumber)
+  }
+
+  handleMessageChange(value) {
+    this.setState({
+      message: value
+    })
+    console.log(this.state.message)
   }
 
   render() {
@@ -40,6 +69,8 @@ export default class Text extends Component {
         </div>
         <div>
           Send a Text
+          <input placeholder="Number" onChange={(e)=> {this.handleNumberChange(e.target.value)}}/>
+          <input placeholder="Message" onChange={(e)=> {this.handleMessageChange(e.target.value)}}/>
           <button onClick={this.sendText}>Let the dargon become you</button>
         </div>
       </div>)

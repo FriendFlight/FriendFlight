@@ -30,7 +30,7 @@
     "eject": "react-scripts eject"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
-  "main": "./server.js",
+  "main": "server.js",
   "proxy": "http://localhost:3001",
   "repository": {
     "type": "git",

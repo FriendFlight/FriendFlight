@@ -79,11 +79,11 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/send-text', function(req, res) {
-    console.log("Dexter's Laboratory", req.body.message)
+    console.log("Dexter's Laboratory", req.body.message, req.body.phoneNumber)
 
     client.messages.create({
       body: req.body.message,
-      to: '+18018376861',
+      to: req.body.phoneNumber,
       from: config.twilio.twilioNumber
     }).then((message) => {
       console.log(message, "and", message.sid)
