@@ -1,10 +1,11 @@
-const express = require('express')
-const session = require('express-session')
-const bodyParser = require('body-parser')
-const config = require('./config')
-const massive = require('massive')
-const passport = require('passport')
-const Auth0Strategy = require('passport-auth0')
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const config = require('./config');
+const massive = require('massive');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+
 
 const app = express()
 
@@ -79,4 +80,3 @@ massive(config.connectionString).then(dbInstance => {
 })
 
 app.listen(config.port, console.log(`Listening on port ${config.port}...`))
-
