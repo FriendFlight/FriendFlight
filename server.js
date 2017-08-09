@@ -7,6 +7,7 @@ const passport = require('passport')
 const Auth0Strategy = require('passport-auth0')
 const twilio = require('twilio')
 const client = new twilio(config.twilio.accountSid, config.twilio.authToken)
+const schedule = require('node-schedule')
 
 const app = express()
 
@@ -89,6 +90,22 @@ massive(config.connectionString).then(dbInstance => {
       console.log(message, "and", message.sid)
       res.status(200).send("We done it!")
     }).catch(err => console.log(err))
+  })
+
+  app.post('/api/send-text/scheduled', function(req, res) {
+    console.log('This will probably send a text.')
+    let sendTextLater = schedule.scheduleJob(req.body.date, function(){
+      console.log('This should be sending a text.')
+
+      client.messages.create({
+        body: req.body.message,
+        to: req.body.phoneNumber,
+        from: config.twilio.twilioNumber
+      }).then((message) => {
+        res.status(200).send("We done it!")
+      }).catch(err => console.log(err))
+    })
+
   })
 
 })
