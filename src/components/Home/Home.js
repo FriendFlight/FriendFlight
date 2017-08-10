@@ -20,7 +20,7 @@ constructor() {
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
-  this.flightAPI=this.flightAPI.bind(this);
+  this.getFlight=this.getFlight.bind(this);
 }
 
 componentDidMount(){
@@ -40,7 +40,7 @@ showDrive(){
     driveDisplay:'block'
   })
 }
-flightAPI(url)
+getFlight(url)
 {
   // axios.request({
   //   url: url,
@@ -54,11 +54,11 @@ flightAPI(url)
     this.setState({
       flight: res.data
     });
-    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
-    .then(res=>
-    {
-      console.log("location", res.data);
-    })
+    // axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
+    // .then(res=>
+    // {
+    //   console.log("location", res.data);
+    // })
   })
 
   // .then(){
@@ -72,7 +72,7 @@ flightAPI(url)
       <div>
         <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
-        <FlightInput user={this.state.user} show={this.showNotifications} flight={this.flightAPI}/>
+        <FlightInput user={this.state.user} show={this.showNotifications} getFlight={this.getFlight}/>
         <br />
         <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
         <br />

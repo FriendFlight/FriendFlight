@@ -34,10 +34,15 @@ constructor() {
 
   }
     sendTripInfo(){
-      axios.post('/api/flight', {flightNumber: this.state.flightNumLetters+this.state.flightNumNums,
-         currentUserID: this.props.user.id, arrivalDate: this.state.flightWholeDate}).then(response => console.log(response.data))
-      this.props.flight(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${this.state.flightNumLetters}/${this.state.flightNumNums}/arriving/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`);
-    }
+      
+      if (this.props){
+      this.props.getFlight(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${this.state.flightNumLetters}/
+      ${this.state.flightNumNums}/arriving/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}?appId=
+      ${config.flightStats.appId}&appKey=${config.flightStats.key}`).then(() => {
+        axios.post('/api/flight', {flightNumber: this.state.flightNumLetters+this.state.flightNumNums,
+         currentUserID: this.props.user.id, arrivalDate: this.state.flightWholeDate, 
+         airportAddress: null, arrivalTime: null, offsetHours: null}).then(response => console.log(response.data))})
+    }}
 
   render()
   {
