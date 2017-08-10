@@ -15,7 +15,6 @@ constructor() {
     displayNotifications: 'none',
     driveDisplay: 'none',
     user: "",
-    flight:[]
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
