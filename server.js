@@ -151,7 +151,7 @@ massive(config.connectionString).then(dbInstance => {
     // setup email data with unicode symbols
     let mailOptions = {
       from: 'ridemindr@gmail.com', //From
-      to: 'jordan@cooperplanet.com', //To
+      to: req.body.email, //To
       subject: `It's almost time to leave for the airport`,// Subject
       text: 'Something real snarky for now.', 
       html: `<b>I don't know what you said.</b>`
