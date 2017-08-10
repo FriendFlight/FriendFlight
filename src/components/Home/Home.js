@@ -15,14 +15,18 @@ constructor() {
     displayNotifications: 'none',
     driveDisplay: 'none',
     user: "",
+    flight:[]
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
+  this.getFlight=this.getFlight.bind(this);
 }
 
 componentDidMount(){
   axios.get("/auth/me").then(response=>{
-    this.setState({user:response.data})
+    this.setState({
+      user:response.data
+    })
   })
 
 }
@@ -37,6 +41,16 @@ showDrive(){
     driveDisplay:'block'
   })
 }
+getFlight(url){
+  axios.get(url)
+  .then(res=>
+  {
+    this.setState({
+        flight:res.data
+    })
+    console.log("flight", this.state.flight);
+  })
+}
 
   render()
   {
@@ -45,14 +59,13 @@ showDrive(){
       <div>
         <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
-        <FlightInput user={this.state.user} show={this.showNotifications}/>
+        <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <br />
         <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
         <br />
-        <DriveDisplay display={this.state.driveDisplay}/>
+        <DriveDisplay flight={this.state.flight} display={this.state.driveDisplay}/>
       </div>
     )
-    console.log("flight", this.state.flight);
     return (
       <div className="home">
         <h1 id="title">Future logo</h1>

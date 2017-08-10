@@ -1,13 +1,14 @@
-const express = require('express')
-const session = require('express-session')
-const bodyParser = require('body-parser')
-const config = require('./config')
-const massive = require('massive')
-const passport = require('passport')
-const Auth0Strategy = require('passport-auth0')
-const twilio = require('twilio')
-const client = new twilio(config.twilio.accountSid, config.twilio.authToken)
-const schedule = require('node-schedule')
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const config = require('./config');
+const massive = require('massive');
+const passport = require('passport');
+const Auth0Strategy = require('passport-auth0');
+const twilio = require('twilio');
+const client = new twilio(config.twilio.accountSid, config.twilio.authToken);
+const schedule = require('node-schedule');
+const axios =require('axios');
 
 const app = express()
 
@@ -57,7 +58,7 @@ massive(config.connectionString).then(dbInstance => {
   app.get('/auth/me', function (req, res) {
     if (!req.user)
       return res.status(200).send("");
-                        console.log("user", req.user)
+                        console.log("user", req.user.displayName)
     res.status(200).send(req.user);
   })
 
@@ -67,8 +68,9 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/flight', function (req, res) {
-    dbInstance.addTrip([req.body.flightNumber, req.body.arrivalDate, req.body.currentUserID, true, true, req.body.airportAddress, 
-      req.body.arrivalTime, req.body.offsetHours]).then((trip) => (res.status(200).send(trip)))
+    dbInstance.addTrip([req.body.flightNumber, req.body.arrivalDate, req.body.currentUserID, true, true, req.body.airportAddress,
+      req.body.arrivalTime, req.body.offsetHours])
+        .then((trip) => (res.status(200).send(trip)))
   })
 
   app.post('/api/location', function(req, res) {
@@ -105,7 +107,25 @@ massive(config.connectionString).then(dbInstance => {
         res.status(200).send("We done it!")
       }).catch(err => console.log(err))
     })
+  })
+  
+  app.get('/api/flightAPI/:letters/:nums/:year/:month/:day/:location', function(req, res)
+  {
+    Promise.all([
+    axios.get(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${req.params.letters}/${req.params.nums}/arriving/${req.params.year}/${req.params.month}/${req.params.day}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`)
+      .then((flight)=>
+      {
+        return flight.data;
+      })
+    ])
+    .then((info)=>
+      {
+        axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${info[0].appendix.airports[1].name}&key=${config.google}`)
+        .then((directions)=>{
+          res.send({info:info, directions:directions.data})
+        })
 
+    }).catch(err=>console.error(err))
   })
 
 })

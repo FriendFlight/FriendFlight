@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import axios from "axios";
-import config from "../../config";
+import axios from 'axios';
+import config from '../../config'
 
 export default class FlightInput extends Component
 {
@@ -35,34 +35,38 @@ constructor() {
 
   }
     sendTripInfo(){
-      axios.get(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${this.state.flightNumLetters}/${this.state.flightNumNums}/arriving/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`)
-          .then( res=> {
+      // axios.get(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${this.state.flightNumLetters}/${this.state.flightNumNums}/arriving/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`)
+      //     .then( res=> {
+      //       this.setState({
+      //         flight:res.data,
+      //         airportName:res.data.appendix.airports[1].name,
+      //         offset:res.data.appendix.airports[1].utcOffsetHours,
+      //         arrivalTime:res.data.scheduledFlights[0].arrivalTime
+      //       })
+      //       console.log("flight", this.state.flight)
+      //       axios.post('/api/flight', {flightNumber: this.state.flightNumLetters+this.state.flightNumNums,
+      //       currentUserID: this.props.user.id, arrivalDate: this.state.flightWholeDate,
+      //       airportAddress: this.state.airportName, arrivalTime: this.state.arrivalTime, offsetHours: this.state.offset})
+      //         .then(response => null)
+      //         console.log("location", this.state.location)
+      //         axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${this.state.location.lat},${this.state.location.lng}&destination=${this.state.airportName}&key=${config.google}`)
+      //           .then(res=>{
+      //             this.setState({
+      //               directions:res.data
+      //             })
+      //             console.log("directions", this.state.directions)
+      //           })
+      //       })
+      //     })
+        axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
+          .then(res=>{
             this.setState({
-              flight:res.data
+              location:`${res.data.location.lat},${res.data.location.lng}`
             })
-            console.log("flight", this.state.flight)
-            axios.post('/api/flight', {flightNumber: this.state.flightNumLetters+this.state.flightNumNums,
-            currentUserID: this.props.user.id, arrivalDate: this.state.flightWholeDate, 
-            airportAddress: null, arrivalTime: null, offsetHours: null})
-              .then(response => null)
-            axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
-            .then(res=>{
-              this.setState({
-                location:res.data.location
-              })
-              console.log("location", this.state.location)
-              console.log("bug", this.state.location.lat, this.state.location.lng, this.state.flight.appendix.airports[1].name)
-              axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${this.state.location.lat},${this.state.location.lng}&destination=${this.state.flight.appendix.airports[1].name}&key=${config.google}`)
-                .then(res=>{
-                  this.setState({
-                    directions:res.data
-                  })
-                  console.log("directions", this.state.directions)
-                })
-            })
+            this.props.flight(`/api/flightAPI/${this.state.flightNumLetters}/${this.state.flightNumNums}/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}/${this.state.location}`);
           })
       }
-    
+
 
   render()
   {

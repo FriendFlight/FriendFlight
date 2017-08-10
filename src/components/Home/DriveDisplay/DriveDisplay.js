@@ -2,6 +2,20 @@ import React, {Component} from "react";
 
 export default class DriveDisplay extends Component
 {
+  constructor(){
+    super();
+    this.state={
+      flight:[],
+      directions:[]
+    }
+  }
+  conponentDidMount()
+  {
+    this.setState({
+      flight:this.props.flight.info[0],
+      directions:this.props.flight.directions
+    })
+  }
   render()
   {
     return (
