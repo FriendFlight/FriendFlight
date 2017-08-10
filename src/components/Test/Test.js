@@ -9,11 +9,13 @@ export default class Text extends Component {
       phoneNumber: '',
       message: '',
       scheduledPhoneNumber: '',
-      scheduledMessage: ''
+      scheduledMessage: '',
+      email: '',
     }
 
     this.sendText = this.sendText.bind(this)
     this.sendScheduledText = this.sendScheduledText.bind(this)
+    this.sendEmail = this.sendEmail.bind(this)
   }
 
   componentWillMount() {
@@ -70,7 +72,17 @@ export default class Text extends Component {
     })
   }
 
-  render() {
+  handleEmailChange(value) {
+    this.setState({
+      email: value
+    })
+  }
+
+  sendEmail() {
+    axios.post('/api/send-email', {email:this.state.email}).then(response => console.log(response.data))
+  }
+
+  render() {  
     return(
       <div>
         <div>
@@ -96,6 +108,11 @@ export default class Text extends Component {
           <input placeholder="Number" onChange={(e)=> {this.handleScheduledNumberChange(e.target.value)}}/>
           <input placeholder="Message" onChange={(e)=> {this.handleScheduledMessageChange(e.target.value)}}/>
           <button onClick={this.sendScheduledText}>The dargon becomes you</button>
+        </div>
+        <div>
+          Send an email
+          <input placeholder="yourMom.com" onChange={(e)=> {this.handleEmailChange(e.target.value)}}/>
+          <button onClick={this.sendEmail}>See through the dARGons i's</button>
         </div>
       </div>)
   }

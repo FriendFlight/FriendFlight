@@ -10,12 +10,14 @@
     "massive": "^3.1.0",
     "node-sass-chokidar": "0.0.3",
     "node-schedule": "^1.2.4",
+    "nodemailer": "^4.0.1",
     "npm-run-all": "^4.0.2",
     "passport": "^0.3.2",
     "passport-auth0": "^0.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2",
+    "sendmail": "^1.2.0",
     "twilio": "^3.6.1"
   },
   "devDependencies": {
