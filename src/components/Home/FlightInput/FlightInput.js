@@ -40,6 +40,7 @@ constructor() {
             this.setState({
               location:`${res.data.location.lat},${res.data.location.lng}`
             })
+            console.log('shit',this.props.flight)
             this.props.flight(`/api/flightAPI/${this.state.flightNumLetters}/${this.state.flightNumNums}/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}/${this.state.location}`);
           })
       }

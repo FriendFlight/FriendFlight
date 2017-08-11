@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import GoogleMap from './GoogleMap';
 
 export default class DriveDisplay extends Component
 {
@@ -12,8 +13,8 @@ export default class DriveDisplay extends Component
                           <h1>trip info</h1>
                           <h2>It looks like your drive will take about {this.props.flight.directions.routes[0].legs[0].duration.text} and be about {this.props.flight.directions.routes[0].legs[0].distance.text}.</h2>
                           <h2>Here is the fastest route to {this.props.flight.info[0].appendix.airports[1].name} from your location. </h2>
-                          <div style={{"width": "100px", "height":"100px", "background":"lightblue"}} id="map">
-                          </div>
+                          <GoogleMap from={{lat: 41.85, lng: -87.65}} to={{lat: 39.79, lng: -86.14}}/>
+
                         </div>):null}
       </div>
     );
