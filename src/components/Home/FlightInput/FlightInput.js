@@ -15,6 +15,7 @@ constructor() {
             }
   this.handleFlightNumberChange=this.handleFlightNumberChange.bind(this);
   this.handleFlightDateChange=this.handleFlightDateChange.bind(this);
+  this.handleAddressChange=this.handleAddressChange.bind(this);
   this.sendTripInfo=this.sendTripInfo.bind(this);
 }
   handleFlightNumberChange(value) {
@@ -24,6 +25,13 @@ constructor() {
     })
 
   }
+  handleAddressChange(value)
+  {
+      this.setState({
+        location:value
+      })
+  }
+
   handleFlightDateChange(value) {
     let dateArray = value.split('-')
     this.setState({
@@ -34,16 +42,23 @@ constructor() {
     })
 
   }
-    sendTripInfo(){
-        axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
-          .then(res=>{
-            this.setState({
-              location:`${res.data.location.lat},${res.data.location.lng}`
-            })
-            console.log('shit',this.props.flight)
-            this.props.flight(`/api/flightAPI/${this.state.flightNumLetters}/${this.state.flightNumNums}/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}/${this.state.location}`);
-          })
+    sendTripInfo()
+    {
+      if(this.state.location)
+      {
+        this.props.flight(`/api/flightAPI/${this.state.flightNumLetters}/${this.state.flightNumNums}/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}/${this.state.location}`);
       }
+      else
+      {
+        axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${config.google}`)
+        .then(res=>{
+          this.setState({
+            location:`${res.data.location.lat},${res.data.location.lng}`
+          })
+          this.props.flight(`/api/flightAPI/${this.state.flightNumLetters}/${this.state.flightNumNums}/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}/${this.state.location}`);
+        })
+      }
+    }
 
 
   render()
@@ -56,11 +71,11 @@ constructor() {
         <br />
         <h2>Go ahead and allow us to view your current location for travel planning.</h2>
         <button onClick={()=>{this.props.show()
-          this.sendTripInfo()
-
-          }}>Submit</button>
+          this.sendTripInfo()}}>Submit</button>
         <h3>Or you can give us an address you want to start your pickup from</h3>
-        <input placeholder="Manually Enter Address" />
+        <input placeholder="Manually Enter Address" onChange={(event)=> {this.handleAddressChange(event.target.value)}}/>
+        <button onClick={()=>{this.props.show()
+          this.sendTripInfo()}}>Submit</button>
       </div>
     );
   }

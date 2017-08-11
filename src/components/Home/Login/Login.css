@@ -7,8 +7,11 @@
     .login a #login {
       background-color: white;
       border: 2px solid black;
+      border-radius: 10px;
       padding: 7px;
       font-size: 25px;
       color: black;
       font-weight: bold;
       cursor: pointer; }
+    .login a #login:hover {
+      border: 4px solid black; }
