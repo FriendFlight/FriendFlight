@@ -58,7 +58,7 @@ massive(config.connectionString).then(dbInstance => {
   app.get('/auth/callback', passport.authenticate('auth0', {successRedirect: 'http://localhost:3000/'}))
 
   app.get('/auth/me', function (req, res) {
-    if (!req.user) 
+    if (!req.user)
       return res.status(200).send("");
     console.log("user", req.user.displayName)
     res
@@ -141,7 +141,7 @@ massive(config.connectionString).then(dbInstance => {
       axios
         .get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${info[0].appendix.airports[1].name}&key=${config.google}`)
         .then((directions) => {
-          res.send({info: info, directions: directions.data})
+          res.send({info: info, directions: directions.data, location:req.params.location})
         })
 
     }).catch(err => console.error(err))
@@ -153,7 +153,7 @@ massive(config.connectionString).then(dbInstance => {
       from: 'ridemindr@gmail.com', //From
       to: req.body.email, //To
       subject: `It's almost time to leave for the airport`,// Subject
-      text: 'Something real snarky for now.', 
+      text: 'Something real snarky for now.',
       html: `<b>I don't know what you said.</b>`
     };
 

@@ -47,7 +47,6 @@ getFlight(url){
     this.setState({
         flight:res.data
     })
-    console.log("flight", this.state.flight);
   })
 }
 
