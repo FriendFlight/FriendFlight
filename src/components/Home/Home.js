@@ -14,7 +14,8 @@ constructor() {
   this.state = {
     displayNotifications: 'none',
     driveDisplay: 'none',
-    user: "",
+    user: '',
+    flight: ''
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
@@ -52,6 +53,7 @@ getFlight(url){
 
   render()
   {
+    console.log('flight',this.state.flight)
 
     const isLoggedIn = (
       <div>
@@ -59,7 +61,7 @@ getFlight(url){
         <br />
         <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <br />
-        <NotificationPref display={this.state.displayNotifications} show={this.showDrive}/>
+        <NotificationPref flight={this.state.flight} display={this.state.displayNotifications} show={this.showDrive}/>
         <br />
         <DriveDisplay flight={this.state.flight} display={this.state.driveDisplay}/>
       </div>

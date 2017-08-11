@@ -50,7 +50,7 @@ constructor () {
         {this.state.phoneNumNum ||this.state.email ? messageParagraph:null}
         <button onClick={this.props.show}>Yes</button>
         <button onClick={this.props.show}>No</button>
-        
+
         
       </div>
     );

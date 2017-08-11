@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import moment from 'moment'
 
 export default class Text extends Component {
 
@@ -43,7 +44,7 @@ export default class Text extends Component {
   }
 
   sendScheduledText() {
-    const date = new Date(2017, 7, 9, 15, 3, 0);
+    const date = new Date('2017-08-11T14:45:00.000');
     axios.post('/api/send-text/scheduled', {date: date, phoneNumber: `+1${this.state.phoneNumber}`, message: this.state.message }).then(response => console.log(response.data))
   }
 
@@ -76,6 +77,20 @@ export default class Text extends Component {
     this.setState({
       email: value
     })
+  }
+
+  sendRealNotification(notificationType) {
+    //use this.props.flight to calculate date and time to send message
+    let timeFromAirline = new Date('2017-08-11T16:50:00.000')
+    let tripDurationInSeconds = 2700 + 300
+    const date = moment(timeFromAirline).subtract(tripDurationInSeconds, 'seconds').toDate()
+
+    if(notificationType === "EMAIL") {
+      axios.post('/api/send-email/scheduled', {email:'jordan@cooperplanet.com', date: date}).then(response => console.log(response.data))
+    }
+    else {
+      axios.post('/api/send-text/scheduled', {phoneNumber:'+18018376861', date: date, message: 'Time ta go!'}).then(response => console.log(response.data))
+    }
   }
 
   sendEmail() {
@@ -113,6 +128,10 @@ export default class Text extends Component {
           Send an email
           <input placeholder="yourMom.com" onChange={(e)=> {this.handleEmailChange(e.target.value)}}/>
           <button onClick={this.sendEmail}>See through the dARGons i's</button>
+        </div>
+        <div>
+          Send the REAL text
+          <button onClick={() => {this.sendRealNotification("TEXT")}}>is that a pro gunjo</button>
         </div>
       </div>)
   }
