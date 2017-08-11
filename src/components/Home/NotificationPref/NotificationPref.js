@@ -119,8 +119,15 @@ export default class NotificationPref extends Component {
         <h2>Would you like an email as a reminder? We can do that too!</h2>
         <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         <br />
-        {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
 
+// friday-notifications branch
+//         {this.state.phoneNumNum ||this.state.email ? messageParagraph:null}
+//         <button onClick={this.props.show}>Yes</button>
+//         <button onClick={this.props.show}>No</button>
+
+        
+
+        {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
 
       </div>
     );
