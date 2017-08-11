@@ -18,6 +18,7 @@
     "passport-auth0": "^0.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-load-script": "0.0.6",
     "react-router-dom": "^4.1.2",
     "sendmail": "^1.2.0",
     "twilio": "^3.6.1"
