@@ -73,7 +73,7 @@ massive(config.connectionString).then(dbInstance => {
 
   app.post('/api/flight', function (req, res) {
     dbInstance.addTrip([req.body.flightNumber, req.body.arrivalDate, req.body.currentUserID, true, true,
-        req.body.airportAddress, req.body.arrivalTime, req.body.offsetHours])
+        req.body.airportName, req.body.arrivalTime, null])
       .then((trip) => res.status(200).send(trip))
   })
 
@@ -82,8 +82,7 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/location', function (req, res) {
-    dbInstance
-      .addDriver([req.body.urrcentUserID, req.body.latitude, req.body.longitude])
+    dbInstance.addDriver([req.body.currentUserID, req.body.latitude, req.body.longitude])
       .then((driver) => (res.status(200).send(driver)))
   })
 
@@ -145,9 +144,9 @@ massive(config.connectionString).then(dbInstance => {
   app.post('/api/send-email', function (req, res) {
     // setup email data with unicode symbols
     let mailOptions = {
-      from: 'ridemindr@gmail.com', //From
-      to: req.body.email, //To
-      subject: `It's almost time to leave for the airport`,// Subject
+      from: 'ridemindr@gmail.com',
+      to: req.body.email,
+      subject: `It's almost time to leave for the airport`,
       text: 'Something real snarky for now.',
       html: `<b>I don't know what you said.</b>`
     };

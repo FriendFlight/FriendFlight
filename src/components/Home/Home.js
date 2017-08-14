@@ -54,14 +54,13 @@ getFlight(url){
   render()
   {
     console.log('flight',this.state.flight)
-
     const isLoggedIn = (
       <div>
         <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
         <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <br />
-        <NotificationPref flight={this.state.flight} display={this.state.displayNotifications} show={this.showDrive}/>
+        <NotificationPref user={this.state.user} flight={this.state.flight} display={this.state.displayNotifications} show={this.showDrive}/>
         <br />
         <DriveDisplay flight={this.state.flight} display={this.state.driveDisplay}/>
       </div>
