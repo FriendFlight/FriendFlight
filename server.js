@@ -99,47 +99,43 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/send-text', function (req, res) {
-    console.log("Dexter's Laboratory", req.body.message, req.body.phoneNumber)
-
-    client
-      .messages
-      .create({body: req.body.message, to: req.body.phoneNumber, from: config.twilio.twilioNumber})
-      .then((message) => {
-        console.log(message, "and", message.sid)
-        res
-          .status(200)
-          .send("We done it!")
-      })
-      .catch(err => console.log(err))
-  })
-
-  app.post('/api/send-text/scheduled', function (req, res) {
     console.log('This will probably send a text.')
     let sendTextLater = schedule.scheduleJob(req.body.date, function () {
       console.log('This should be sending a text.')
 
-      client
-        .messages
-        .create({body: req.body.message, to: req.body.phoneNumber, from: config.twilio.twilioNumber})
-        .then((message) => {
-          res
-            .status(200)
-            .send("We done it!")
-        })
-        .catch(err => console.log(err))
+      client.messages.create({
+        body: 'Almost time to leave for the airport!',
+        to: req.body.phoneNumber,
+        from: config.twilio.twilioNumber})
+        .then((message) => {res.status(200).send("We done it!")}).catch(err => console.log(err))
     })
   })
 
+  // app.post('/api/send-text/scheduled', function (req, res) {
+  //   console.log('This will probably send a text.')
+  //   let sendTextLater = schedule.scheduleJob(req.body.date, function () {
+  //     console.log('This should be sending a text.')
+  //
+  //     client
+  //       .messages
+  //       .create({body: req.body.message, to: req.body.phoneNumber, from: config.twilio.twilioNumber})
+  //       .then((message) => {
+  //         res
+  //           .status(200)
+  //           .send("We done it!")
+  //       })
+  //       .catch(err => console.log(err))
+  //   })
+  // })
+
   app.get('/api/flightAPI/:letters/:nums/:year/:month/:day/:location', function (req, res) {
     Promise.all([
-      axios
-        .get(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${req.params.letters}/${req.params.nums}/arriving/${req.params.year}/${req.params.month}/${req.params.day}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`)
+      axios.get(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${req.params.letters}/${req.params.nums}/arriving/${req.params.year}/${req.params.month}/${req.params.day}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`)
         .then((flight) => {
           return flight.data;
         })
     ]).then((info) => {
-      axios
-        .get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${info[0].appendix.airports[1].name}&key=${config.google}`)
+      axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${info[0].appendix.airports[0].name}&key=${config.google}`)
         .then((directions) => {
           res.send({info: info, directions: directions.data, location:req.params.location})
         })
@@ -147,23 +143,33 @@ massive(config.connectionString).then(dbInstance => {
     }).catch(err => console.error(err))
   })
 
-  app.post('/api/send-email', function (req, res) {
-    // setup email data with unicode symbols
-    let mailOptions = {
-      from: 'ridemindr@gmail.com',
-      to: req.body.email,
-      subject: `It's almost time to leave for the airport`,
-      text: 'Something real snarky for now.',
-      html: `<b>I don't know what you said.</b>`
-    };
+  app.get('/api/new-location/:location/:destination', function(req, res) {
+    axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${req.params.destination}&key=${config.google}`)
+      .then((directions) => {
+        res.status(200).send({directions: directions.data})
+      })
+  })
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
+  app.post('/api/send-email', function (req, res) {
+    console.log("This will probably send an email.")
+
+    let sendEmailLater = schedule.scheduleJob(req.body.date, function () {
+      console.log("This should be sending an email!")
+      let mailOptions = {
+        from: 'ridemindr@gmail.com',
+        to: req.body.email,
+        subject: `Your RideMindr Reminder!`,
+        text: 'Almost time to leave for the airport!',
+        html: `<b>Almost time to leave for the airport!</b>`
       }
-      console.log('Message %s sent: %s', info.messageId, info.response);
-    });
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error)
+        }
+        console.log('Email sent!', info.messageId, info.response)
+      })
+    })
   })
 
 })

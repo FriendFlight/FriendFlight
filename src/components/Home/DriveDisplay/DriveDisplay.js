@@ -17,7 +17,7 @@ export default class DriveDisplay extends Component
           <h1>We will be in touch!</h1>
           <h1>trip info</h1>
           <h2>It looks like your drive will take about {this.props.flight.directions.routes[0].legs[0].duration.text} and be about {this.props.flight.directions.routes[0].legs[0].distance.text}.</h2>
-          <h2>Here is the fastest route to {this.props.flight.info[0].appendix.airports[this.props.flight.info[0].appendix.airports.length - 1].name} from your location. </h2>
+          <h2>Here is the fastest route to {this.props.flight.info[0].appendix.airports[this.props.airportIndex].name} from your location. </h2>
           {googleMap}
         </div>):null}
       </div>

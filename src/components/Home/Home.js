@@ -15,7 +15,8 @@ constructor() {
     displayNotifications: 'none',
     driveDisplay: 'none',
     user: '',
-    flight: ''
+    flight: '',
+    airportIndex: 0
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
@@ -45,24 +46,48 @@ getFlight(url){
   axios.get(url)
   .then(res=>
   {
-    this.setState({
+    if((res.data.directions.routes[0].legs[0].distance.value / 1760) > 100) {
+      console.log("It's too long.")
+      this.setState({
+        airportIndex: this.state.airportIndex + 1
+      })
+      axios.get(`/api/new-location/${res.data.location}/${res.data.info[0].appendix.airports[this.state.airportIndex].name}`)
+        .then(newResponse => {
+          console.log("Old", res.data)
+          let newFlight = Object.assign({}, res.data, newResponse.data)
+
+          console.log("new", newFlight)
+          this.setState({
+            flight: newFlight
+          })
+        })
+    }
+    else {
+      this.setState({
         flight:res.data
-    })
+      })
+    }
   })
 }
 
   render()
   {
-    console.log('flight',this.state.flight)
+    // console.log('flight',this.state.flight)
     const isLoggedIn = (
       <div>
         <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
         <br />
         <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <br />
-        <NotificationPref user={this.state.user} flight={this.state.flight} display={this.state.displayNotifications} show={this.showDrive}/>
+        <NotificationPref user={this.state.user}
+                          flight={this.state.flight}
+                          display={this.state.displayNotifications}
+                          airportIndex={this.state.airportIndex}
+                          show={this.showDrive}/>
         <br />
-        <DriveDisplay flight={this.state.flight} display={this.state.driveDisplay}/>
+        <DriveDisplay flight={this.state.flight}
+                      display={this.state.driveDisplay}
+                      airportIndex={this.state.airportIndex}/>
       </div>
     )
     return (

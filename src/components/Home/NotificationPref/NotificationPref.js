@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios'
+import moment from 'moment'
 export default class NotificationPref extends Component {
 
   constructor ()
@@ -76,7 +77,6 @@ export default class NotificationPref extends Component {
       phoneNumNum: value.match(/\d/g)
     })
     this.valPhone(value.match(/\d/g))
-    console.log(this.state.phoneNumNum)
   }
 
   handleEmailChange(value)
@@ -103,6 +103,16 @@ export default class NotificationPref extends Component {
     }
   }
 
+  sendScheduledText(date) {
+    axios.post('/api/send-text', {date: date, phoneNumber: `+1${this.state.phoneNumNum.join('')}`})
+      .then(response => console.log(response.data))
+  }
+
+  sendScheduledEmail(date) {
+    axios.post('/api/send-email', {date: date, email:this.state.valEmail})
+      .then(response => console.log(response.data))
+  }
+
   finalizeInfo(sendMorningOf) {
     axios.post('/api/flight', {
       isFinalData: true,
@@ -112,12 +122,18 @@ export default class NotificationPref extends Component {
       arrivalDate: this.props.flight.info[0].scheduledFlights[0].arrivalTime.substring(0, 10),
       currentUserID: this.props.user.id,
       morningOfNotification: sendMorningOf,
-      airportName: this.props.flight.info[0].appendix.airports[this.props.flight.info[0].appendix.airports.length - 1].name,
+      airportName: this.props.flight.info[0].appendix.airports[this.props.airportIndex].name,
       arrivalTime: this.props.flight.info[0].scheduledFlights[0].arrivalTime,
       userLatitude: this.props.flight.directions.routes[0].legs[0].start_location.lat,
       userLongitude: this.props.flight.directions.routes[0].legs[0].start_location.lng
       }).then(response => console.log(response))
 
+    const date = moment(this.props.flight.info[0].scheduledFlights[0].arrivalTime)
+      .subtract(this.props.flight.directions.routes[0].legs[0].duration.value + 300, 'seconds').toDate()
+    if(this.state.phoneNumNum)
+      this.sendScheduledText(date)
+    if(this.state.valEmail)
+      this.sendScheduledEmail(date)
   }
 
   render()
