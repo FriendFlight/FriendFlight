@@ -1,12 +1,34 @@
 import React, {Component} from "react";
 import axios from 'axios'
-import "./Home.css";
+// import "./Home.css";
 
 import Login from './Login/Login';
 import FlightInput from './FlightInput/FlightInput';
 import DriveDisplay from './DriveDisplay/DriveDisplay';
 import NotificationPref from './NotificationPref/NotificationPref';
+import styled from 'styled-components';
 
+import { ThemeProvider } from 'styled-components';
+import theme from '../../components/Theme.js';
+
+import logo from './ridemindurLogo.png';
+
+    const Logo = styled.img`
+      height: 19em;
+      margin: 0 auto;
+      display: block;
+
+    `
+    const Text = styled.text`
+      margin: 0 auto;
+      font-size: 1.25em;
+    `
+    const Padder = styled.div`
+      max-width: 90vw;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 5vh;
+    `
 export default class Home extends Component
 {
 constructor() {
@@ -74,8 +96,8 @@ getFlight(url){
   {
     // console.log('flight',this.state.flight)
     const isLoggedIn = (
-      <div>
-        <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
+      <Text>
+        <Padder>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</Padder>
         <br />
         <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <br />
@@ -85,17 +107,23 @@ getFlight(url){
                           airportIndex={this.state.airportIndex}
                           show={this.showDrive}/>
         <br />
+
         <DriveDisplay flight={this.state.flight}
                       display={this.state.driveDisplay}
                       airportIndex={this.state.airportIndex}/>
       </div>
+
+      </Text>
+
     )
     return (
       <div className="home">
-        <h1 id="title">Future logo</h1>
-        <h2>Intro stuff, two sentences</h2>
-        <br />
-        <br />
+        <Logo src={logo}></Logo>
+          <Padder>
+            <Text>Ridemindur is a simple solution to planning your trip to the airport.</Text > 
+            <br/>
+            <Text>Get to the airport right on time, every time.</Text > 
+          </Padder>
         <Login user= {this.state.user}/>
         {this.state.user?isLoggedIn:null}
       </div>

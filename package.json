@@ -21,6 +21,7 @@
     "react-load-script": "0.0.6",
     "react-router-dom": "^4.1.2",
     "sendmail": "^1.2.0",
+    "styled-components": "^2.1.2",
     "twilio": "^3.6.1"
   },
   "devDependencies": {
