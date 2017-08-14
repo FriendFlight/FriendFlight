@@ -20,7 +20,7 @@ const LoginButton = styled.div`
 const LogoutButton = LoginButton.extend`
       top: -55px;
       right: 10px;
-      position: fixed; 
+      position: absolute; 
       font-size: 1em;
     `
 

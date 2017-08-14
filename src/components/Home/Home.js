@@ -8,6 +8,9 @@ import DriveDisplay from './DriveDisplay/DriveDisplay';
 import NotificationPref from './NotificationPref/NotificationPref';
 import styled from 'styled-components';
 
+import { ThemeProvider } from 'styled-components';
+import theme from '../../components/Theme.js';
+
 import logo from './ridemindurLogo.png';
 
     const Logo = styled.img`
@@ -75,15 +78,15 @@ getFlight(url){
     console.log('flight',this.state.flight)
 
     const isLoggedIn = (
-      <div>
-        <h1>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</h1>
+      <Text>
+        <Padder>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</Padder>
         <br />
         <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <br />
         <NotificationPref flight={this.state.flight} display={this.state.displayNotifications} show={this.showDrive}/>
         <br />
         <DriveDisplay flight={this.state.flight} display={this.state.driveDisplay}/>
-      </div>
+      </Text>
     )
     return (
       <div className="home">
