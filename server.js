@@ -72,9 +72,15 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/flight', function (req, res) {
+    if(req.body.isFinalData) {
+      dbInstance.addDriver([req.body.currentUserID, req.body.userLatitude, req.body.userLongitude]).then(trip => console.log(trip))
+      dbInstance.updatePerson([req.body.currentUserID, req.body.phoneNumber, req.body.email]).then(trip => console.log(trip))
+    }
+
     dbInstance.addTrip([req.body.flightNumber, req.body.arrivalDate, req.body.currentUserID, true, true,
         req.body.airportName, req.body.arrivalTime, null])
       .then((trip) => res.status(200).send(trip))
+
   })
 
   app.get('/api/flight', function (req, res) {

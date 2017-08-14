@@ -76,6 +76,7 @@ export default class NotificationPref extends Component {
       phoneNumNum: value.match(/\d/g)
     })
     this.valPhone(value.match(/\d/g))
+    console.log(this.state.phoneNumNum)
   }
 
   handleEmailChange(value)
@@ -104,7 +105,8 @@ export default class NotificationPref extends Component {
 
   finalizeInfo(sendMorningOf) {
     axios.post('/api/flight', {
-      phoneNumber: this.state.phoneNumNum,
+      isFinalData: true,
+      phoneNumber: this.state.phoneNumNum.join(''),
       email: this.state.valEmail,
       flightNumber: this.props.flight.info[0].scheduledFlights[0].carrierFsCode + this.props.flight.info[0].scheduledFlights[0].flightNumber,
       arrivalDate: this.props.flight.info[0].scheduledFlights[0].arrivalTime.substring(0, 10),
@@ -136,7 +138,7 @@ export default class NotificationPref extends Component {
       <div style={{'display': `${this.props.display}`}}>
         <h1>How do you want us to send you a reminder for the pickup?</h1>
         <h2>Do you want us to send you a text? If so give us a number to use.</h2>
-        <input type="tel" onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
+        <input onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
         <h2>Would you like an email as a reminder? We can do that too!</h2>
         <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         <br />
