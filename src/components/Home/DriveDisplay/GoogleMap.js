@@ -18,7 +18,7 @@ export default class GoogleMap extends Component {
     const map = new google.maps.Map(document.getElementById('map'), {
       center: this.props.to,
       scrollwheel: false,
-      zoom: 8
+      zoom: 7
     });
 
     const directionsDisplay = new google.maps.DirectionsRenderer({

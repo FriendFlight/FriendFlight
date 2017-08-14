@@ -7,7 +7,8 @@ export default class DriveDisplay extends Component
   {
     let googleMap = null
     if(this.props.display === 'block') {
-      googleMap = (<GoogleMap from={{lat: 41.85, lng: -87.65}} to={{lat: 39.79, lng: -86.14}}/>)
+      googleMap = (<GoogleMap to={`${this.props.flight.directions.routes[0].legs[0].start_location.lat}, ${this.props.flight.directions.routes[0].legs[0].start_location.lng}`}
+                              from={`${this.props.flight.directions.routes[0].legs[0].end_location.lat}, ${this.props.flight.directions.routes[0].legs[0].end_location.lng}`}/>)
     }
     return (
       <div style={{'display': `${this.props.display}`}}>
