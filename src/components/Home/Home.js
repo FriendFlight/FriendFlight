@@ -17,13 +17,14 @@ import logo from './ridemindurLogo.png';
 
     `
     const Text = styled.text`
-    margin: 0 auto;
-    text-align: center;
-    word-break: 
+      margin: 0 auto;
+      font-size: 1.25em;
     `
     const Padder = styled.div`
-        max-width: 90vw;
-    margin: 0 auto;
+      max-width: 90vw;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 5vh;
     `
 export default class Home extends Component
 {
@@ -88,7 +89,9 @@ getFlight(url){
       <div className="home">
         <Logo src={logo}></Logo>
           <Padder>
-            <Text>Ridemindur is a simple solution to planning your trip to the airport. Get to the airport right on time, every time. </Text >
+            <Text>Ridemindur is a simple solution to planning your trip to the airport.</Text > 
+            <br/>
+            <Text>Get to the airport right on time, every time.</Text > 
           </Padder>
         <Login user= {this.state.user}/>
         {this.state.user?isLoggedIn:null}
