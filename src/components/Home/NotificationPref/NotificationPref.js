@@ -120,12 +120,6 @@ export default class NotificationPref extends Component {
         <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         <br />
 
-        {this.state.phoneNumNum ||this.state.email ? messageParagraph:null}
-        <button onClick={this.props.show}>Yes</button>
-        <button onClick={this.props.show}>No</button>
-
-        
-
         {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
 
       </div>
