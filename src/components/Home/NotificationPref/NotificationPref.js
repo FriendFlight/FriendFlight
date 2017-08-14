@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import axios from 'axios'
+import moment from 'moment'
 export default class NotificationPref extends Component {
 
   constructor ()
@@ -17,7 +19,7 @@ export default class NotificationPref extends Component {
   }
 
   validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
@@ -101,25 +103,61 @@ export default class NotificationPref extends Component {
     }
   }
 
+  sendScheduledText(date) {
+    axios.post('/api/send-text', {date: date, phoneNumber: `+1${this.state.phoneNumNum.join('')}`})
+      .then(response => console.log(response.data))
+  }
+
+  sendScheduledEmail(date) {
+    axios.post('/api/send-email', {date: date, email:this.state.valEmail})
+      .then(response => console.log(response.data))
+  }
+
+  finalizeInfo(sendMorningOf) {
+    axios.post('/api/flight', {
+      isFinalData: true,
+      phoneNumber: this.state.phoneNumNum.join(''),
+      email: this.state.valEmail,
+      flightNumber: this.props.flight.info[0].scheduledFlights[0].carrierFsCode + this.props.flight.info[0].scheduledFlights[0].flightNumber,
+      arrivalDate: this.props.flight.info[0].scheduledFlights[0].arrivalTime.substring(0, 10),
+      currentUserID: this.props.user.id,
+      morningOfNotification: sendMorningOf,
+      airportName: this.props.flight.info[0].appendix.airports[this.props.airportIndex].name,
+      arrivalTime: this.props.flight.info[0].scheduledFlights[0].arrivalTime,
+      userLatitude: this.props.flight.directions.routes[0].legs[0].start_location.lat,
+      userLongitude: this.props.flight.directions.routes[0].legs[0].start_location.lng
+      }).then(response => console.log(response))
+
+    const date = moment(this.props.flight.info[0].scheduledFlights[0].arrivalTime)
+      .subtract(this.props.flight.directions.routes[0].legs[0].duration.value + 300, 'seconds').toDate()
+    if(this.state.phoneNumNum)
+      this.sendScheduledText(date)
+    if(this.state.valEmail)
+      this.sendScheduledEmail(date)
+  }
+
   render()
   {
     const messageParagraph=(<div>
-                            <h2>Awesome! We'll message you via{this.adaptiveParagraph()}10 minutes before you should
-                              leave for the airport. Would you like a reminder to be sent the morning of
-                              the pickup as well? </h2>
-                            <button onClick={this.props.show}>Yes</button>
-                            <button onClick={this.props.show}>No</button>
-                          </div>)
+      <h2>Awesome! We'll message you via{this.adaptiveParagraph()}10 minutes before you should
+        leave for the airport. Would you like a reminder to be sent the morning of
+        the pickup as well? </h2>
+      <button onClick={() => {
+        this.props.show()
+        this.finalizeInfo(true)}}>Yes</button>
+      <button onClick={() => {
+        this.props.show()
+        this.finalizeInfo(false)}}>No</button>
+    </div>)
 
     return (
       <div style={{'display': `${this.props.display}`}}>
         <h1>How do you want us to send you a reminder for the pickup?</h1>
         <h2>Do you want us to send you a text? If so give us a number to use.</h2>
-        <input type="tel" onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
+        <input onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
         <h2>Would you like an email as a reminder? We can do that too!</h2>
         <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         <br />
-
         {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
 
       </div>

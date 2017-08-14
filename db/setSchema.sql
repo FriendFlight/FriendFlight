@@ -20,11 +20,11 @@ arrival_date date,
 person_id text,
 is_tracked boolean,
 morning_of boolean,
-airport_address text,
+airport_name text,
 arrival_time text,
 utc_offset_hours text);
 
-INSERT INTO Trip (flight_number, arrival_date, person_id, is_tracked, morning_of, airport_address, arrival_time, utc_offset_hours)
+INSERT INTO Trip (flight_number, arrival_date, person_id, is_tracked, morning_of, airport_name, arrival_time, utc_offset_hours)
 VALUES ('A123', '2017-08-08', '1', true, true, null, null, null);
 
 DROP TABLE IF EXISTS Driver;
