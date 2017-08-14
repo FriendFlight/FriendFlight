@@ -1,12 +1,30 @@
 import React, {Component} from "react";
 import axios from 'axios'
-import "./Home.css";
+// import "./Home.css";
 
 import Login from './Login/Login';
 import FlightInput from './FlightInput/FlightInput';
 import DriveDisplay from './DriveDisplay/DriveDisplay';
 import NotificationPref from './NotificationPref/NotificationPref';
+import styled from 'styled-components';
 
+import logo from './ridemindurLogo.png';
+
+    const Logo = styled.img`
+      height: 19em;
+      margin: 0 auto;
+      display: block;
+
+    `
+    const Text = styled.text`
+    margin: 0 auto;
+    text-align: center;
+    word-break: 
+    `
+    const Padder = styled.div`
+        max-width: 90vw;
+    margin: 0 auto;
+    `
 export default class Home extends Component
 {
 constructor() {
@@ -68,10 +86,10 @@ getFlight(url){
     )
     return (
       <div className="home">
-        <h1 id="title">Future logo</h1>
-        <h2>Intro stuff, two sentences</h2>
-        <br />
-        <br />
+        <Logo src={logo}></Logo>
+          <Padder>
+            <Text>Ridemindur is a simple solution to planning your trip to the airport. Get to the airport right on time, every time. </Text >
+          </Padder>
         <Login user= {this.state.user}/>
         {this.state.user?isLoggedIn:null}
       </div>
