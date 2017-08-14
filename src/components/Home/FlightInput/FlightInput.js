@@ -79,7 +79,6 @@ export default class FlightInput extends Component {
           this.props.flight(`/api/flightAPI/${this.state.flightNumLetters}/${this.state.flightNumNums}/${this.state.flightYear}/${this.state.flightMonth}/${this.state.flightDay}/${this.state.location}`);
         })
 
-    }
   }
 
     }

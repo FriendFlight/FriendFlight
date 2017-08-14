@@ -111,8 +111,6 @@ getFlight(url){
         <DriveDisplay flight={this.state.flight}
                       display={this.state.driveDisplay}
                       airportIndex={this.state.airportIndex}/>
-      </div>
-
       </Text>
 
     )
