@@ -140,7 +140,7 @@ export default class FlightInput extends Component {
         </Padder>
           <Spacer75/>
         <Padder>What day does the flight land?
-        <DateSelect>
+          <DateSelect>
             <Input type="date" placeholder="MM/DD/YYYY" onChange={(event) => { this.handleFlightDateChange(event.target.value) }} />
           </DateSelect>
         </Padder>
@@ -149,11 +149,12 @@ export default class FlightInput extends Component {
           <SubmitButton onClick={() => {
             this.props.show()
             this.sendTripInfo()
-          }}>Go for it!</SubmitButton>
+            }}>Go for it!
+          </SubmitButton>
         </Padder>
-        <Spacer75/>
+          <Spacer75/>
         <Padder>Or manually enter your address
-        <FlightInputBox>
+          <FlightInputBox>
             <Input placeholder="Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>
@@ -161,7 +162,8 @@ export default class FlightInput extends Component {
           <SubmitButton onClick={() => {
             this.props.show()
             this.sendTripInfo()
-          }}>Submit</SubmitButton>
+            }}>Submit
+          </SubmitButton>
         </Padder>
       </div>
     );
