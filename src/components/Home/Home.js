@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios'
+import config from '../config'
 // import "./Home.css";
 
 import Login from './Login/Login';
@@ -39,7 +40,8 @@ constructor() {
     driveDisplay: 'none',
     user: '',
     flight: '',
-    airportIndex: 0
+    airportIndex: 0,
+    shortURL: ''
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
@@ -70,7 +72,6 @@ getFlight(url){
   .then(res=>
   {
     if((res.data.directions.routes[0].legs[0].distance.value / 1760) > 100) {
-      console.log("It's too long.")
       this.setState({
         airportIndex: this.state.airportIndex + 1
       })
@@ -78,6 +79,14 @@ getFlight(url){
         .then(newResponse => {
           console.log("Old", res.data)
           let newFlight = Object.assign({}, res.data, newResponse.data)
+          console.log("Building shortenedURL")
+          axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${config.googleShortener}`,
+            {"longUrl": `https://www.google.com/maps/dir/Current+Location/${newFlight.directions.routes[0].legs[0].end_location.lat},${newFlight.directions.routes[0].legs[0].end_location.lng}`})
+            .then(response => {
+              this.setState({
+                shortURL: response.data.id
+              })
+            })
 
           console.log("new", newFlight)
           this.setState({
@@ -106,7 +115,8 @@ getFlight(url){
                           flight={this.state.flight}
                           display={this.state.displayNotifications}
                           airportIndex={this.state.airportIndex}
-                          show={this.showDrive}/>
+                          show={this.showDrive}
+                          shortURL={this.state.shortURL}/>
         <br />
 
         <DriveDisplay flight={this.state.flight}

@@ -49,19 +49,20 @@ export default class NotificationPref extends Component {
     this.state={
       phoneNumNum: "",
       valEmail:"",
-      email: ""
+      email: "",
+      shortURL: ""
     }
-    this.validateEmail=this.validateEmail.bind(this);
-    this.validate=this.validate.bind(this);
-    this.validPhone=this.validPhone.bind(this);
-    this.handleNumNumChange=this.handleNumNumChange.bind(this);
-    this.handleEmailChange=this.handleEmailChange.bind(this);
-    this.adaptiveParagraph=this.adaptiveParagraph.bind(this);
+    this.validateEmail=this.validateEmail.bind(this)
+    this.validate=this.validate.bind(this)
+    this.validPhone=this.validPhone.bind(this)
+    this.handleNumNumChange=this.handleNumNumChange.bind(this)
+    this.handleEmailChange=this.handleEmailChange.bind(this)
+    this.adaptiveParagraph=this.adaptiveParagraph.bind(this)
   }
 
   validateEmail(email) {
     let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    return re.test(email)
   }
 
   validate(email)
@@ -145,12 +146,12 @@ export default class NotificationPref extends Component {
   }
 
   sendScheduledText(date) {
-    axios.post('/api/send-text', {date: date, phoneNumber: `+1${this.state.phoneNumNum.join('')}`})
+    axios.post('/api/send-text', {date: date, phoneNumber: `+1${this.state.phoneNumNum.join('')}`, googleURL: this.props.shortURL})
       .then(response => console.log(response.data))
   }
 
   sendScheduledEmail(date) {
-    axios.post('/api/send-email', {date: date, email:this.state.email})
+    axios.post('/api/send-email', {date: date, email:this.state.email, googleURL: this.props.shortURL})
       .then(response => console.log(response.data))
   }
 
@@ -187,7 +188,6 @@ export default class NotificationPref extends Component {
       console.log("will fire sendScheduledEmail",this.state.email)
       this.sendScheduledEmail(date)
     }
-
   }
 
   render()
