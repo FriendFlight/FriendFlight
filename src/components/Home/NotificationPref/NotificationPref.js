@@ -60,19 +60,21 @@ export default class NotificationPref extends Component {
     super()
     this.state={
       phoneNumNum: "",
-      valEmail:""
+      valEmail:"",
+      email: "",
+      shortURL: ""
     }
-    this.validateEmail=this.validateEmail.bind(this);
-    this.validate=this.validate.bind(this);
-    this.validPhone=this.validPhone.bind(this);
-    this.handleNumNumChange=this.handleNumNumChange.bind(this);
-    this.handleEmailChange=this.handleEmailChange.bind(this);
-    this.adaptiveParagraph=this.adaptiveParagraph.bind(this);
+    this.validateEmail=this.validateEmail.bind(this)
+    this.validate=this.validate.bind(this)
+    this.validPhone=this.validPhone.bind(this)
+    this.handleNumNumChange=this.handleNumNumChange.bind(this)
+    this.handleEmailChange=this.handleEmailChange.bind(this)
+    this.adaptiveParagraph=this.adaptiveParagraph.bind(this)
   }
 
   validateEmail(email) {
     let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    return re.test(email)
   }
 
   validate(email)
@@ -156,20 +158,28 @@ export default class NotificationPref extends Component {
   }
 
   sendScheduledText(date) {
-    axios.post('/api/send-text', {date: date, phoneNumber: `+1${this.state.phoneNumNum.join('')}`})
+    axios.post('/api/send-text', {date: date, phoneNumber: `+1${this.state.phoneNumNum.join('')}`, googleURL: this.props.shortURL})
       .then(response => console.log(response.data))
   }
 
   sendScheduledEmail(date) {
-    axios.post('/api/send-email', {date: date, email:this.state.valEmail})
+    axios.post('/api/send-email', {date: date, email:this.state.email, googleURL: this.props.shortURL})
       .then(response => console.log(response.data))
   }
 
   finalizeInfo(sendMorningOf) {
+    let finalPhoneNumber
+    if(this.state.phoneNumNum) {
+      finalPhoneNumber = this.state.phoneNumNum.join('')
+    }
+    else {
+      finalPhoneNumber = this.state.phoneNumNum
+    }
+
     axios.post('/api/flight', {
       isFinalData: true,
-      phoneNumber: this.state.phoneNumNum.join(''),
-      email: this.state.valEmail,
+      phoneNumber: finalPhoneNumber,
+      email: this.state.email,
       flightNumber: this.props.flight.info[0].scheduledFlights[0].carrierFsCode + this.props.flight.info[0].scheduledFlights[0].flightNumber,
       arrivalDate: this.props.flight.info[0].scheduledFlights[0].arrivalTime.substring(0, 10),
       currentUserID: this.props.user.id,
@@ -182,10 +192,14 @@ export default class NotificationPref extends Component {
 
     const date = moment(this.props.flight.info[0].scheduledFlights[0].arrivalTime)
       .subtract(this.props.flight.directions.routes[0].legs[0].duration.value + 300, 'seconds').toDate()
-    if(this.state.phoneNumNum)
+    if(finalPhoneNumber && finalPhoneNumber.length !== 0) {
+      console.log("will fire sendScheduledText",this.state.phoneNumNum)
       this.sendScheduledText(date)
-    if(this.state.valEmail)
+    }
+    if(this.state.email) {
+      console.log("will fire sendScheduledEmail",this.state.email)
       this.sendScheduledEmail(date)
+    }
   }
 
   render()
