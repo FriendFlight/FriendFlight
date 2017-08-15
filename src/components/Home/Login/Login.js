@@ -6,11 +6,11 @@ import theme from '../../../components/Theme.js';
 
 const LoginButton = styled.div`
       background-color: white;
-      border: 1px solid black;
+      border: 1px solid #616161;
       padding: 7px;
       width: 30vw;
       font-size: 1.50em;
-      color: black;
+      color: #616161;
       cursor: pointer;
       font-family: lato;
       margin: 0 auto;

@@ -22,6 +22,7 @@ import logo from './ridemindurLogo.png';
     const Text = styled.text`
       margin: 0 auto;
       font-size: 1.25em;
+      font-color: #616161;
     `
     const Padder = styled.div`
       max-width: 90vw;
