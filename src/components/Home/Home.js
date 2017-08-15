@@ -89,11 +89,11 @@ getFlight(url){
           axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${config.googleShortener}`,
             {"longUrl": `https://www.google.com/maps/dir/Current+Location/${newFlight.directions.routes[0].legs[0].end_location.lat},${newFlight.directions.routes[0].legs[0].end_location.lng}`})
             .then(response => {
+              console.log("shortened URL:", response.data.id)
               this.setState({
                 shortURL: response.data.id
               })
             })
-
           console.log("new", newFlight)
           this.setState({
             flight: newFlight
@@ -101,6 +101,15 @@ getFlight(url){
         })
     }
     else {
+      console.log("Building shortenedURL")
+      axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${config.googleShortener}`,
+        {"longUrl": `https://www.google.com/maps/dir/Current+Location/${res.data.directions.routes[0].legs[0].end_location.lat},${res.data.directions.routes[0].legs[0].end_location.lng}`})
+        .then(response => {
+          console.log("shortened URL:", response.data.id)
+          this.setState({
+            shortURL: response.data.id
+          })
+        })
       this.setState({
         flight:res.data
       })
@@ -131,7 +140,6 @@ getFlight(url){
                           shortURL={this.state.shortURL}/>
         <Spacer10/>
         <br />
-
         <DriveDisplay flight={this.state.flight}
                       display={this.state.driveDisplay}
                       airportIndex={this.state.airportIndex}/>
