@@ -15,11 +15,12 @@ const Padder = styled.div`
       text-align: center;
     `
     
-const FlightInputBox = styled.div`
+const ContactInputBox = styled.div`
       background-color: white;
       border: 1px solid #616161;
       padding: 5px;
-      width: 50vw;
+      max-width: 75vw;
+      max-height: 45px; 
       font-size: 1em;
       color: #616161;
       cursor: pointer;
@@ -28,6 +29,17 @@ const FlightInputBox = styled.div`
       margin-top: 10px;
       text-align: center;
       overflow: hidden;
+`
+
+const YesNoButton = styled.button`
+      background-color: white;
+      height: 5vh;
+      width: 40vw;
+      margin-top: 10px;
+      border: 1px solid #616161;
+      color: #616161;
+      cursor: pointer;
+      font-size: .75em;
 `
 
 export default class NotificationPref extends Component {
@@ -170,25 +182,25 @@ export default class NotificationPref extends Component {
       <h2>Awesome! We'll message you via{this.adaptiveParagraph()}10 minutes before you should
         leave for the airport. Would you like a reminder to be sent the morning of
         the pickup as well? </h2>
-      <button onClick={() => {
+      <YesNoButton onClick={() => {
         this.props.show()
-        this.finalizeInfo(true)}}>Yes</button>
-      <button onClick={() => {
+        this.finalizeInfo(true)}}>Yes</YesNoButton>
+      <YesNoButton onClick={() => {
         this.props.show()
-        this.finalizeInfo(false)}}>No</button>
+        this.finalizeInfo(false)}}>No</YesNoButton>
     </div>)
 
     return (
       <Padder style={{'display': `${this.props.display}`}}>
         <h1>How do you want us to send you a reminder for the pickup?</h1>
         <h2>Do you want us to send you a text? If so give us a number to use.</h2>
-        <FlightInputBox>
+        <ContactInputBox>
           <input onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
-        </FlightInputBox>
+        </ContactInputBox>
         <h2>Would you like an email as a reminder? We can do that too!</h2>
-        <FlightInputBox>
+        <ContactInputBox>
           <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
-        </FlightInputBox>
+        </ContactInputBox>
         <br />
         {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
 

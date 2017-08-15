@@ -37,8 +37,20 @@ const Input = styled.input`
       font-family: 'Lato', sans-serif;
       color: #616161;
 `
-// const Button = styled.button`
+const SubmitButton = styled.button`
+      background-color: white;
+      height: 5vh;
+      width: 40vw;
+      margin-top: 10px;
+      border: 1px solid #616161;
+      color: #616161;
+      cursor: pointer;
+      font-size: .75em;
+`
 
+// const SubmitButtonHover: styled.hover`
+//        background-color: #616161 ;
+//        color: white;
 // `
 
 
@@ -125,10 +137,12 @@ export default class FlightInput extends Component {
         <br />
         <Padder>Click the button below so we can</Padder>
         <Padder>plan your trip to the airport.</Padder>
-        <Button onClick={() => {
-          this.props.show()
-          this.sendTripInfo()
-        }}>Use your location</Button>
+        <Padder>
+          <SubmitButton onClick={() => {
+            this.props.show()
+            this.sendTripInfo()
+          }}>Use your location</SubmitButton>
+        </Padder>
         <br />
         <br />
         <br />
@@ -138,10 +152,12 @@ export default class FlightInput extends Component {
             <Input placeholder="Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>
-        <Button onClick={() => {
-          this.props.show()
-          this.sendTripInfo()
-        }}>Submit</Button>
+        <Padder>
+          <SubmitButton onClick={() => {
+            this.props.show()
+            this.sendTripInfo()
+          }}>Submit</SubmitButton>
+        </Padder>
       </div>
     );
   }
