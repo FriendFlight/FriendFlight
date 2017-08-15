@@ -99,34 +99,18 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/send-text', function (req, res) {
-    console.log('This will probably send a text.')
+    console.log('This will probably send a text.', req.body.googleURL)
     let sendTextLater = schedule.scheduleJob(req.body.date, function () {
       console.log('This should be sending a text.')
 
       client.messages.create({
-        body: 'Almost time to leave for the airport!',
+        body: `Almost time to leave for the airport! Here is a Google Maps link if you need directions:
+        ${req.body.googleURL}`,
         to: req.body.phoneNumber,
         from: config.twilio.twilioNumber})
         .then((message) => {res.status(200).send("We done it!")}).catch(err => console.log(err))
     })
   })
-
-  // app.post('/api/send-text/scheduled', function (req, res) {
-  //   console.log('This will probably send a text.')
-  //   let sendTextLater = schedule.scheduleJob(req.body.date, function () {
-  //     console.log('This should be sending a text.')
-  //
-  //     client
-  //       .messages
-  //       .create({body: req.body.message, to: req.body.phoneNumber, from: config.twilio.twilioNumber})
-  //       .then((message) => {
-  //         res
-  //           .status(200)
-  //           .send("We done it!")
-  //       })
-  //       .catch(err => console.log(err))
-  //   })
-  // })
 
   app.get('/api/flightAPI/:letters/:nums/:year/:month/:day/:location', function (req, res) {
     Promise.all([
@@ -151,7 +135,7 @@ massive(config.connectionString).then(dbInstance => {
   })
 
   app.post('/api/send-email', function (req, res) {
-    console.log("This will probably send an email.")
+    console.log("This will probably send an email.", req.body.googleURL)
 
     let sendEmailLater = schedule.scheduleJob(req.body.date, function () {
       console.log("This should be sending an email!")
@@ -159,8 +143,9 @@ massive(config.connectionString).then(dbInstance => {
         from: 'ridemindr@gmail.com',
         to: req.body.email,
         subject: `Your RideMindr Reminder!`,
-        text: 'Almost time to leave for the airport!',
-        html: `<b>Almost time to leave for the airport!</b>`
+        text: `Almost time to leave for the airport! Here is a link to Google Maps if you need directions: ${req.body.googleURL}`,
+        html: `<b>Almost time to leave for the airport!</b>
+                <p>Here is a link to Google Maps if you need directions: <a href={req.body.googleURL}>${req.body.googleURL}<a/></p>`
       }
 
       transporter.sendMail(mailOptions, (error, info) => {
