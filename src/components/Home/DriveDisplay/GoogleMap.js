@@ -1,9 +1,28 @@
 import React, { Component } from 'react';
 import GoogleMapsLoader from 'google-maps'
-import './GoogleMap.css'
+// import './GoogleMap.css'
 
 import Script from 'react-load-script'
 
+//Styled Components
+import styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+import theme from '../../../components/Theme.js';
+//Styled Components
+
+const Padder = styled.div`
+      max-width: 90vw;
+      margin: 0 auto;
+      text-align: center;
+    `
+
+const Map = styled.div`
+      
+      max-width: 600px;
+      height:400px;
+      margin: 10px;
+      margin-top:20px;
+    `
 export default class GoogleMap extends Component {
 
   constructor(props) {
@@ -49,7 +68,7 @@ export default class GoogleMap extends Component {
         url="https://maps.googleapis.com/maps/api/js"
         onLoad={this.initMap.bind(this)}
       />
-      <div className="map" id="map"></div>
+      <Map className="map" id="map"></Map>
     </div>
   }
 }

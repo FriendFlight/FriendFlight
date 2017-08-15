@@ -2,9 +2,15 @@ import React, { Component } from "react";
 import axios from 'axios';
 import config from '../../config'
 
+//Styled Components
 import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../components/Theme.js';
+//Styled Components
+
+//Semantic UI
+import { Button, Icon } from 'semantic-ui-react';
+//Semantic UI
 
 const Padder = styled.div`
       max-width: 90vw;
@@ -13,16 +19,40 @@ const Padder = styled.div`
     `
 const FlightInputBox = styled.div`
       background-color: white;
-      border: 1px solid black;
+      border: 1px solid #616161;
       padding: 5px;
       width: 50vw;
       font-size: 1em;
-      color: black;
+      color: #616161;
       cursor: pointer;
-      font-family: lato;
+      font-family: 'Lato', sans-serif;
       margin: 0 auto;
+      margin-top: 10px;
       text-align: center;
+      overflow: hidden;
 `
+const Input = styled.input`
+      text-align: center;
+      width: 100%;
+      font-family: 'Lato', sans-serif;
+      color: #616161;
+`
+const SubmitButton = styled.button`
+      background-color: white;
+      height: 5vh;
+      width: 40vw;
+      margin-top: 10px;
+      border: 1px solid #616161;
+      color: #616161;
+      cursor: pointer;
+      font-size: .75em;
+`
+
+// const SubmitButtonHover: styled.hover`
+//        background-color: #616161 ;
+//        color: white;
+// `
+
 
 
 
@@ -90,7 +120,7 @@ export default class FlightInput extends Component {
         <Padder>What's the final flight number for</Padder>
         <Padder> the friend you're picking up?
           <FlightInputBox>
-            <input placeholder="Example: DL1234" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />
+            <Input placeholder="Example: DL1234"  maxlength="10" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>
         <br />
@@ -99,7 +129,7 @@ export default class FlightInput extends Component {
         <Padder>What day are you going to pick up</Padder>
         <Padder> your friend from the airport?
         <FlightInputBox>
-            <input type="date" name="MM/DD/YYYY" onChange={(event) => { this.handleFlightDateChange(event.target.value) }} />
+            <Input type="date" placeholder="MM/DD/YYYY" onChange={(event) => { this.handleFlightDateChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>
         <br />
@@ -107,23 +137,27 @@ export default class FlightInput extends Component {
         <br />
         <Padder>Click the button below so we can</Padder>
         <Padder>plan your trip to the airport.</Padder>
-        <button onClick={() => {
-          this.props.show()
-          this.sendTripInfo()
-        }}>Submit</button>
+        <Padder>
+          <SubmitButton onClick={() => {
+            this.props.show()
+            this.sendTripInfo()
+          }}>Use your location</SubmitButton>
+        </Padder>
         <br />
         <br />
         <br />
         <Padder>Or you can give us an address you</Padder>
         <Padder>want to start your pickup from?
-           <FlightInputBox>
-            <input placeholder="Manually Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
+          <FlightInputBox>
+            <Input placeholder="Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>
-        <button onClick={() => {
-          this.props.show()
-          this.sendTripInfo()
-        }}>Submit</button>
+        <Padder>
+          <SubmitButton onClick={() => {
+            this.props.show()
+            this.sendTripInfo()
+          }}>Submit</SubmitButton>
+        </Padder>
       </div>
     );
   }
