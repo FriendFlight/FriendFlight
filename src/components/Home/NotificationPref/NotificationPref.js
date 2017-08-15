@@ -48,7 +48,8 @@ export default class NotificationPref extends Component {
     super()
     this.state={
       phoneNumNum: "",
-      valEmail:""
+      valEmail:"",
+      email: ""
     }
     this.validateEmail=this.validateEmail.bind(this);
     this.validate=this.validate.bind(this);
@@ -149,15 +150,23 @@ export default class NotificationPref extends Component {
   }
 
   sendScheduledEmail(date) {
-    axios.post('/api/send-email', {date: date, email:this.state.valEmail})
+    axios.post('/api/send-email', {date: date, email:this.state.email})
       .then(response => console.log(response.data))
   }
 
   finalizeInfo(sendMorningOf) {
+    let finalPhoneNumber
+    if(this.state.phoneNumNum) {
+      finalPhoneNumber = this.state.phoneNumNum.join('')
+    }
+    else {
+      finalPhoneNumber = this.state.phoneNumNum
+    }
+
     axios.post('/api/flight', {
       isFinalData: true,
-      phoneNumber: this.state.phoneNumNum.join(''),
-      email: this.state.valEmail,
+      phoneNumber: finalPhoneNumber,
+      email: this.state.email,
       flightNumber: this.props.flight.info[0].scheduledFlights[0].carrierFsCode + this.props.flight.info[0].scheduledFlights[0].flightNumber,
       arrivalDate: this.props.flight.info[0].scheduledFlights[0].arrivalTime.substring(0, 10),
       currentUserID: this.props.user.id,
@@ -170,10 +179,15 @@ export default class NotificationPref extends Component {
 
     const date = moment(this.props.flight.info[0].scheduledFlights[0].arrivalTime)
       .subtract(this.props.flight.directions.routes[0].legs[0].duration.value + 300, 'seconds').toDate()
-    if(this.state.phoneNumNum)
+    if(finalPhoneNumber && finalPhoneNumber.length !== 0) {
+      console.log("will fire sendScheduledText",this.state.phoneNumNum)
       this.sendScheduledText(date)
-    if(this.state.valEmail)
+    }
+    if(this.state.email) {
+      console.log("will fire sendScheduledEmail",this.state.email)
       this.sendScheduledEmail(date)
+    }
+
   }
 
   render()
