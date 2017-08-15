@@ -30,7 +30,12 @@ const FlightInputBox = styled.div`
       margin-top: 10px;
       text-align: center;
       overflow: hidden;
+      height: 36px;
 `
+const DateSelect = FlightInputBox.extend`
+      font-size:.9em;
+`
+
 const Input = styled.input`
       text-align: center;
       width: 100%;
@@ -40,14 +45,25 @@ const Input = styled.input`
 const SubmitButton = styled.button`
       background-color: white;
       height: 5vh;
-      width: 40vw;
+      width: 30vw;
       margin-top: 10px;
       border: 1px solid #616161;
       color: #616161;
       cursor: pointer;
       font-size: .75em;
+      border-radius: 6px;
 `
+    const Spacer5 = styled.div`
+    margin-top: 5vh;
+    `
+    const Spacer75 = styled.div`
+    margin-top: 7.5vh;
+    `
+    const Spacer10 = styled.div`
+    margin-top: 10vh;
+    `
 
+    
 // const SubmitButtonHover: styled.hover`
 //        background-color: #616161 ;
 //        color: white;
@@ -116,39 +132,28 @@ export default class FlightInput extends Component {
   render() {
     return (
       <div>
-        <br />
-        <Padder>What's the final flight number for</Padder>
-        <Padder> the friend you're picking up?
+        
+        <Padder>What's the final flight number?
           <FlightInputBox>
             <Input placeholder="Example: DL1234"  maxlength="10" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>
-        <br />
-        <br />
-        <br />
-        <Padder>What day are you going to pick up</Padder>
-        <Padder> your friend from the airport?
-        <FlightInputBox>
+          <Spacer75/>
+        <Padder>What day does the flight land?
+        <DateSelect>
             <Input type="date" placeholder="MM/DD/YYYY" onChange={(event) => { this.handleFlightDateChange(event.target.value) }} />
-          </FlightInputBox>
+          </DateSelect>
         </Padder>
-        <br />
-        <br />
-        <br />
-        <Padder>Click the button below so we can</Padder>
-        <Padder>plan your trip to the airport.</Padder>
-        <Padder>
+        <Spacer75/>
+        <Padder>Can we use your location?
           <SubmitButton onClick={() => {
             this.props.show()
             this.sendTripInfo()
-          }}>Use your location</SubmitButton>
+          }}>Go for it!</SubmitButton>
         </Padder>
-        <br />
-        <br />
-        <br />
-        <Padder>Or you can give us an address you</Padder>
-        <Padder>want to start your pickup from?
-          <FlightInputBox>
+        <Spacer75/>
+        <Padder>Or manually enter your address
+        <FlightInputBox>
             <Input placeholder="Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
           </FlightInputBox>
         </Padder>

@@ -29,8 +29,14 @@ import logo from './ridemindurLogo.png';
       max-width: 90vw;
       margin: 0 auto;
       text-align: center;
-      margin-top: 5vh;
     `
+    const Spacer5 = styled.div`
+    margin-top: 5vh;
+    `
+    const Spacer10 = styled.div`
+    margin-top: 10vh;
+    `
+
 export default class Home extends Component
 {
 constructor() {
@@ -104,19 +110,26 @@ getFlight(url){
 
   render()
   {
-    // console.log('flight',this.state.flight)
+    let userFirstName
+    if (this.state.user.name){
+        userFirstName = this.state.user.name.givenName
+      }
     const isLoggedIn = (
       <Text>
-        <Padder>Hey, thanks for logging in {this.state.user.displayName}. Lets get some details so that we can make your trip as easy as possible!</Padder>
-        <br />
+        <Padder>You're logged in, {userFirstName}. 
+          <br/>
+          Let's plan your trip!
+        </Padder>
+        <Spacer10/>
         <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
-        <br />
+        <Spacer10/>
         <NotificationPref user={this.state.user}
                           flight={this.state.flight}
                           display={this.state.displayNotifications}
                           airportIndex={this.state.airportIndex}
                           show={this.showDrive}
                           shortURL={this.state.shortURL}/>
+        <Spacer10/>
         <br />
 
         <DriveDisplay flight={this.state.flight}
@@ -128,10 +141,10 @@ getFlight(url){
     return (
       <div className="home">
         <Logo src={logo}></Logo>
+        <Spacer5/>
           <Padder>
-            <Text>Ridemindur is a simple solution to planning your trip to the airport.</Text > 
-            <br/>
-            <Text>Get to the airport right on time, every time.</Text > 
+            <Text>Ridemindur gets you to the airport just in time to pick them up. Get to the airport right on time, every time.</Text > 
+             <Spacer10/>
           </Padder>
         <Login user= {this.state.user}/>
         {this.state.user?isLoggedIn:null}

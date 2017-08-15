@@ -28,7 +28,6 @@ const LogoutButton = LoginButton.extend`
 
 export default class Login extends Component {
   render() {
-console.log("this is logged!", this.props.user);
     const login = (<a href="http://localhost:3001/auth">
       <LoginButton id="login">Login</LoginButton>
     </a>)

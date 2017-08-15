@@ -29,18 +29,30 @@ const ContactInputBox = styled.div`
       margin-top: 10px;
       text-align: center;
       overflow: hidden;
+      margin-bottom: 10vh;
 `
 
 const YesNoButton = styled.button`
       background-color: white;
       height: 5vh;
       width: 40vw;
-      margin-top: 10px;
+      margin-top: 20px;
       border: 1px solid #616161;
       color: #616161;
       cursor: pointer;
       font-size: .75em;
 `
+
+const Spacer5 = styled.div`
+    margin-top: 5vh;
+    `
+const Spacer75 = styled.div`
+    margin-top: 7.5vh;
+    `
+const Spacer10 = styled.div`
+    margin-top: 10vh;
+    `
+
 
 export default class NotificationPref extends Component {
   constructor ()
@@ -205,13 +217,17 @@ export default class NotificationPref extends Component {
     </div>)
 
     return (
+      // <Spacer10/>
+      // <Spacer10/>
+      // <Spacer10/>
+      // <Spacer10/>
+      // <Spacer10/>
       <Padder style={{'display': `${this.props.display}`}}>
-        <h1>How do you want us to send you a reminder for the pickup?</h1>
-        <h2>Do you want us to send you a text? If so give us a number to use.</h2>
+        <h2>For text notifications provide a number.</h2>
         <ContactInputBox>
           <input onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
         </ContactInputBox>
-        <h2>Would you like an email as a reminder? We can do that too!</h2>
+        <h2>For email notifications provide an email.</h2>
         <ContactInputBox>
           <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         </ContactInputBox>
