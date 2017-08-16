@@ -132,7 +132,6 @@ export default class FlightInput extends Component {
   render() {
     return (
       <div>
-        
         <Padder>What's the final flight number?
           <FlightInputBox>
             <Input placeholder="Example: DL1234"  maxlength="10" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />
