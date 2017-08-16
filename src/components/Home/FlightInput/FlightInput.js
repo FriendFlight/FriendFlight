@@ -148,7 +148,6 @@ export default class FlightInput extends Component {
           <SubmitButton onClick={() => {
             if(!this.state.flightNumLetters || !this.state.flightWholeDate)
               return
-            this.props.show()
             this.sendTripInfo()
             }}>Go for it!
           </SubmitButton>
@@ -163,9 +162,8 @@ export default class FlightInput extends Component {
           <SubmitButton onClick={() => {
             if(!this.state.flightNumLetters || !this.state.flightWholeDate)
               return
-            this.props.show()
-            this.sendTripInfo()
-            }}>Submit
+            this.sendTripInfo()}
+          }>Submit
           </SubmitButton>
         </Padder>
       </div>

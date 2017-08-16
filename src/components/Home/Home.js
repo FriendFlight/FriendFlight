@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from 'axios'
 import config from '../config'
+import Modal from 'react-modal'
 // import "./Home.css";
 
 import Login from './Login/Login';
@@ -47,7 +48,8 @@ constructor() {
     user: '',
     flight: '',
     airportIndex: 0,
-    shortURL: ''
+    shortURL: '',
+    hasBadRoute: false
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
@@ -87,6 +89,7 @@ getFlight(url){
             this.setState({
               flight: '',
               airportIndex: 0,
+              hasBadRoute: true
             })
             return
           }
@@ -106,6 +109,7 @@ getFlight(url){
           this.setState({
             flight: newFlight
           })
+          this.showNotifications()
         })
     }
     else {
@@ -121,6 +125,7 @@ getFlight(url){
       this.setState({
         flight:res.data
       })
+      this.showNotifications()
     }
   })
 }
@@ -164,6 +169,20 @@ getFlight(url){
           </Padder>
         <Login user= {this.state.user}/>
         {this.state.user?isLoggedIn:null}
+        <Modal
+          isOpen={this.state.hasBadRoute}
+          onRequestClose={() => {
+            this.setState({hasBadRoute: false, displayNotifications: 'none'})
+          }}
+          style={{
+            overlay: {backgroundColor: 'rgba(10, 10, 10, 0.85)'},
+            content: {bottom: 'unset'}
+          }}
+          contentLabel="Bad Route">
+          <div>
+            Cannot get route!
+          </div>
+        </Modal>
       </div>
     );
   }
