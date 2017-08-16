@@ -62,7 +62,6 @@ componentDidMount(){
   })
 
 }
-
 showNotifications(){
   this.setState({
     displayNotifications:'block'
