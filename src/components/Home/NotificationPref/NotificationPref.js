@@ -49,9 +49,14 @@ const Spacer5 = styled.div`
 const Spacer75 = styled.div`
     margin-top: 7.5vh;
     `
-const Spacer10 = styled.div`
-    margin-top: 10vh;
+const SpacerH7 = styled.div`
+    height: 7vh;
     `
+const SpacerH30 = styled.div`
+    height: 30vh;
+    width: 100%;
+`
+
 
 
 export default class NotificationPref extends Component {
@@ -62,7 +67,8 @@ export default class NotificationPref extends Component {
       phoneNumNum: "",
       valEmail:"",
       email: "",
-      shortURL: ""
+      shortURL: "",
+      showSpacer: 'block'
     }
     this.validateEmail=this.validateEmail.bind(this)
     this.validate=this.validate.bind(this)
@@ -143,16 +149,13 @@ export default class NotificationPref extends Component {
 
   adaptiveParagraph()
   {
-    if(this.validPhone(this.state.phoneNumNum)&& this.validateEmail(this.state.email))
-    {
+    if(this.validPhone(this.state.phoneNumNum)&& this.validateEmail(this.state.email)) {
       return " text and email "
     }
-    else if(this.validPhone(this.state.phoneNumNum))
-    {
+    else if(this.validPhone(this.state.phoneNumNum)) {
       return " text "
     }
-    else if(this.validateEmail(this.state.email))
-    {
+    else if(this.validateEmail(this.state.email)) {
       return " email "
     }
   }
@@ -214,14 +217,10 @@ export default class NotificationPref extends Component {
       <YesNoButton onClick={() => {
         this.props.show()
         this.finalizeInfo(false)}}>No</YesNoButton>
+        <SpacerH7/>
     </div>)
 
     return (
-      // <Spacer10/>
-      // <Spacer10/>
-      // <Spacer10/>
-      // <Spacer10/>
-      // <Spacer10/>
       <Padder style={{'display': `${this.props.display}`}}>
         <h2>For text notifications provide a number.</h2>
         <ContactInputBox>
@@ -231,9 +230,13 @@ export default class NotificationPref extends Component {
         <ContactInputBox>
           <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         </ContactInputBox>
+        {/*<SpacerH30 style={{'display': `${this.state.showSpacer}`}}/>*/}
+        
+  
+        
         <br />
         {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
-
+        <SpacerH30/>
       </Padder>
     );
   }

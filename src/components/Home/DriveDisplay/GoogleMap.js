@@ -19,7 +19,7 @@ const Padder = styled.div`
 const Map = styled.div`
       
       max-width: 600px;
-      height:400px;
+      height:50vh;
       margin: 10px;
       margin-top:20px;
     `

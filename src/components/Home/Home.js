@@ -12,13 +12,13 @@ import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../components/Theme.js';
 
-import logo from './ridemindurLogo.png';
+import logo from './ridemindurLogo.svg';
 
     const Logo = styled.img`
-      height: 19em;
+      height: 15em;
       margin: 0 auto;
       display: block;
-
+      margin-top: 10vh;
     `
     const Text = styled.text`
       margin: 0 auto;
@@ -85,7 +85,7 @@ getFlight(url){
         .then(newResponse => {
           console.log("Old", res.data)
           let newFlight = Object.assign({}, res.data, newResponse.data)
-          console.log("Building shortenedURL")
+          console.log("Building shortenedURL", newFlight)
           axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${config.googleShortener}`,
             {"longUrl": `https://www.google.com/maps/dir/Current+Location/${newFlight.directions.routes[0].legs[0].end_location.lat},${newFlight.directions.routes[0].legs[0].end_location.lng}`})
             .then(response => {
