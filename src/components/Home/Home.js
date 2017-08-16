@@ -16,6 +16,11 @@ import theme from '../../components/Theme.js';
 import logo from './ridemindurLogo.svg';
 import sadKangaroo from './RoominderSadLogo.png'
 
+
+//Smooth Scroll
+import scrollToComponent from 'react-scroll-to-component';
+//Smooth Scroll
+
     const Logo = styled.img`
       height: 15em;
       margin: 0 auto;
@@ -139,13 +144,18 @@ getFlight(url){
 
   render()
   {
+    scrollToComponent(this.refs.Scrolly, {
+        offset: 2000,
+        align: 'bottom',
+        duration: 1000
+        });
     let userFirstName
     if (this.state.user.name){
         userFirstName = this.state.user.name.givenName
       }
     const isLoggedIn = (
-      <Text>
-        <Padder>You're logged in, {userFirstName}. 
+      <Text ref='Scrolly'>
+        <Padder style={{ color: "#ff853d"  }}>You're logged in, {userFirstName}. 
           <br/>
           Let's plan your trip!
         </Padder>
@@ -171,7 +181,7 @@ getFlight(url){
         <Logo src={logo}></Logo>
         <Spacer5/>
           <Padder>
-            <Text>Ridemindur gets you to the airport just in time to pick them up. Get to the airport right on time, every time.</Text > 
+            <Text>Roominder gets you to the airport just in time to pick them up. Hop to it on time, every time.</Text > 
              <Spacer10/>
           </Padder>
         <Login user= {this.state.user}/>

@@ -36,11 +36,20 @@ const YesNoButton = styled.button`
       background-color: white;
       height: 5vh;
       width: 40vw;
+      margin: 10px;
       margin-top: 20px;
       border: 1px solid #616161;
       color: #616161;
       cursor: pointer;
       font-size: .75em;
+      border-radius: 6px;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      &:hover${SubmitButton}{
+          background-color: #ff835d;
+          border: 1px solid #ff835d;
+          color: white;
+      }
 `
 const SubmitButton = styled.button`
       background-color: white;
@@ -52,6 +61,13 @@ const SubmitButton = styled.button`
       cursor: pointer;
       font-size: .75em;
       border-radius: 6px;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      &:hover${SubmitButton}{
+          background-color: #ff835d;
+          border: 1px solid #ff835d;
+          color: white;
+      }
 `
 
 const Spacer5 = styled.div`
@@ -61,7 +77,7 @@ const Spacer75 = styled.div`
     margin-top: 7.5vh;
     `
 const SpacerH7 = styled.div`
-    height: 7vh;
+    height: 11vh;
     `
 const SpacerH30 = styled.div`
     height: 30vh;

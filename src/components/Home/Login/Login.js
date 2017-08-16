@@ -16,12 +16,25 @@ const LoginButton = styled.div`
       margin: 0 auto;
       text-align: center;
       margin-top: 10vh; 
+      border-radius: 6px;
+      -webkit-transition-duration: 0.4s;
+      transition-duration: 0.4s;
+      &:hover${LoginButton}{
+          background-color: #ff835d;
+          border: 1px solid #ff835d;
+          color: white;}
     `
 const LogoutButton = LoginButton.extend`
       top: -55px;
       right: 10px;
       position: absolute; 
       font-size: 1em;
+      -webkit-transition-duration: 0.4s;
+      transition-duration: 0.4s;
+      &:hover${LogoutButton}{
+          background-color: #ff835d;
+          border: 1px solid #ff835d;
+          color: white;}
     `
 
 
@@ -37,9 +50,9 @@ export default class Login extends Component {
     </a>)
 
     return (
-      <ThemeProvider theme={ theme }>
+      <ThemeProvider theme={theme}>
         <div>
-          {this.props.user?logout:login}
+          {this.props.user ? logout : login}
         </div>
       </ThemeProvider>
     );
