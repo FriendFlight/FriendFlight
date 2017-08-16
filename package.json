@@ -19,6 +19,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-load-script": "0.0.6",
+    "react-modal": "^2.2.4",
     "react-router-dom": "^4.1.2",
     "semantic-ui-react": "^0.71.4",
     "sendmail": "^1.2.0",

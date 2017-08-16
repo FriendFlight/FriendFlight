@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from 'axios'
 import config from '../config'
+import Modal from 'react-modal'
 // import "./Home.css";
 
 import Login from './Login/Login';
@@ -13,6 +14,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../components/Theme.js';
 
 import logo from './ridemindurLogo.svg';
+import sadKangaroo from './RoominderSadLogo.png'
 
     const Logo = styled.img`
       height: 15em;
@@ -20,6 +22,12 @@ import logo from './ridemindurLogo.svg';
       display: block;
       margin-top: 10vh;
     `
+    const SadKangaroo = styled.img`
+      width: 275px;
+      margin: 0 auto;
+      display: block;
+    `
+
     const Text = styled.text`
       margin: 0 auto;
       font-size: 1.25em;
@@ -47,7 +55,8 @@ constructor() {
     user: '',
     flight: '',
     airportIndex: 0,
-    shortURL: ''
+    shortURL: '',
+    hasBadRoute: false
   }
   this.showNotifications = this.showNotifications.bind(this);
   this.showDrive = this.showDrive.bind(this);
@@ -87,6 +96,7 @@ getFlight(url){
             this.setState({
               flight: '',
               airportIndex: 0,
+              hasBadRoute: true
             })
             return
           }
@@ -106,6 +116,7 @@ getFlight(url){
           this.setState({
             flight: newFlight
           })
+          this.showNotifications()
         })
     }
     else {
@@ -121,6 +132,7 @@ getFlight(url){
       this.setState({
         flight:res.data
       })
+      this.showNotifications()
     }
   })
 }
@@ -164,7 +176,23 @@ getFlight(url){
           </Padder>
         <Login user= {this.state.user}/>
         {this.state.user?isLoggedIn:null}
+        <Modal
+          isOpen={this.state.hasBadRoute}
+          onRequestClose={() => {
+            this.setState({hasBadRoute: false, displayNotifications: 'none'})
+          }}
+          style={{
+            overlay: {backgroundColor: 'rgba(10, 10, 10, 0.85)'},
+            content: {bottom: 'unset'}
+          }}
+          contentLabel="Bad Route">
+          <Text>
+            Cannot get route!
+          </Text>
+          <Spacer5/>
+          <SadKangaroo src={sadKangaroo}/>
+        </Modal>
       </div>
-    );
+    )
   }
 }
