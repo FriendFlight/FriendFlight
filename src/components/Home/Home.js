@@ -14,6 +14,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../components/Theme.js';
 
 import logo from './ridemindurLogo.svg';
+import sadKangaroo from './RoominderSadLogo.png'
 
     const Logo = styled.img`
       height: 15em;
@@ -21,6 +22,12 @@ import logo from './ridemindurLogo.svg';
       display: block;
       margin-top: 10vh;
     `
+    const SadKangaroo = styled.img`
+      width: 275px;
+      margin: 0 auto;
+      display: block;
+    `
+
     const Text = styled.text`
       margin: 0 auto;
       font-size: 1.25em;
@@ -179,11 +186,13 @@ getFlight(url){
             content: {bottom: 'unset'}
           }}
           contentLabel="Bad Route">
-          <div>
+          <Text>
             Cannot get route!
-          </div>
+          </Text>
+          <Spacer5/>
+          <SadKangaroo src={sadKangaroo}/>
         </Modal>
       </div>
-    );
+    )
   }
 }
