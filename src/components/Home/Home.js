@@ -16,6 +16,8 @@ import theme from '../../components/Theme.js';
 import logo from './ridemindurLogo.svg';
 import sadKangaroo from './RoominderSadLogo.png'
 
+//ref={(section) => { this.Padder = section; }}
+// onClick={() => scrollToComponent(this.Padder, {offset: 0, align: 'bottom', duration: 1000}) }
 
 //Smooth Scroll
 import scrollToComponent from 'react-scroll-to-component';
@@ -50,29 +52,36 @@ import scrollToComponent from 'react-scroll-to-component';
     margin-top: 10vh;
     `
 
-export default class Home extends Component
+export default class Home extends Component 
 {
-constructor() {
-  super()
-  this.state = {
-    displayNotifications: 'none',
-    driveDisplay: 'none',
-    user: '',
-    flight: '',
-    airportIndex: 0,
-    shortURL: '',
-    hasBadRoute: false
+  constructor() {
+    super()
+    this.state = {
+      displayNotifications: 'none',
+      driveDisplay: 'none',
+      user: '',
+      flight: '',
+      airportIndex: 0,
+      shortURL: '',
+      hasBadRoute: false
+    }
+    this.showNotifications = this.showNotifications.bind(this);
+    this.showDrive = this.showDrive.bind(this);
+    this.getFlight=this.getFlight.bind(this);
   }
-  this.showNotifications = this.showNotifications.bind(this);
-  this.showDrive = this.showDrive.bind(this);
-  this.getFlight=this.getFlight.bind(this);
-}
+
 
 componentDidMount(){
   axios.get("/auth/me").then(response=>{
     this.setState({
       user:response.data
     })
+    console.log("Component did mount!")
+    scrollToComponent(this.Home, {
+    offset: 0,
+    align: 'bottom',
+    duration: 1000
+  })
   })
 
 }
@@ -80,11 +89,18 @@ showNotifications(){
   this.setState({
     displayNotifications:'block'
   })
+  scrollToComponent(this.Home, {
+    offset: 0,
+    align: 'bottom',
+    duration: 1000
+  })
+
 }
 showDrive(){
   this.setState({
     driveDisplay:'block'
   })
+  
 }
 getFlight(url){
   axios.get(url)
@@ -142,25 +158,23 @@ getFlight(url){
   })
 }
 
+
   render()
   {
-    scrollToComponent(this.refs.Scrolly, {
-        offset: 2000,
-        align: 'bottom',
-        duration: 1000
-        });
+
+    
     let userFirstName
     if (this.state.user.name){
         userFirstName = this.state.user.name.givenName
       }
     const isLoggedIn = (
-      <Text ref='Scrolly'>
-        <Padder style={{ color: "#ff853d"  }}>You're logged in, {userFirstName}. 
+      <Text>
+        <Padder style={{ color: "#ff835d"  }}>You're logged in, {userFirstName}. 
           <br/>
           Let's plan your trip!
         </Padder>
         <Spacer10/>
-        <FlightInput user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
+        <FlightInput ref="flightInput" user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
         <Spacer10/>
         <NotificationPref user={this.state.user}
                           flight={this.state.flight}
@@ -177,7 +191,7 @@ getFlight(url){
       </Text>
     )
     return (
-      <div className="home">
+      <div className="home" ref={(section) => { this.Home = section; }}>
         <Logo src={logo}></Logo>
         <Spacer5/>
           <Padder>

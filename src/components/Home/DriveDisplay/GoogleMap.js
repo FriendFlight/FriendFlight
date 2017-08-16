@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapsLoader from 'google-maps'
+import scrollToComponent from 'react-scroll-to-component';
 // import './GoogleMap.css'
 
 import Script from 'react-load-script'
@@ -30,6 +31,15 @@ export default class GoogleMap extends Component {
     this.state = {
       googleMapsLoaded: false
     }
+  }
+
+  componentDidMount() {
+    console.log("Krumponent did munt!")
+    scrollToComponent(this.Display, {
+        offset: 200,
+        align: 'bottom',
+        duration: 1000
+      })
   }
 
   initMap() {
@@ -63,7 +73,8 @@ export default class GoogleMap extends Component {
 
 
   render() {
-    return <div>
+     
+    return <div ref={(section) => { this.Display = section; }}>
       <Script
         url="https://maps.googleapis.com/maps/api/js"
         onLoad={this.initMap.bind(this)}
