@@ -115,23 +115,26 @@ massive(config.connectionString).then(dbInstance => {
   app.get('/api/flightAPI/:letters/:nums/:year/:month/:day/:location', function (req, res) {
     Promise.all([
       axios.get(`https://api.flightstats.com/flex/schedules/rest/v1/json/flight/${req.params.letters}/${req.params.nums}/arriving/${req.params.year}/${req.params.month}/${req.params.day}?appId=${config.flightStats.appId}&appKey=${config.flightStats.key}`)
-        .then((flight) => {
-          return flight.data;
+        .then(flight => {
+          return flight.data
         })
     ]).then((info) => {
       axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${info[0].appendix.airports[0].name}&key=${config.google}`)
         .then((directions) => {
-          res.send({info: info, directions: directions.data, location:req.params.location})
+          res.send({info: info, directions: directions.data, location: req.params.location})
         })
-
-    }).catch(err => console.error(err))
+        .catch(err => { console.log("directions err", err)
+        })
+    }).catch(err => console.error("flight err", err))
   })
 
   app.get('/api/new-location/:location/:destination', function(req, res) {
     axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${req.params.location}&destination=${req.params.destination}&key=${config.google}`)
       .then((directions) => {
+        console.log("directions", directions.data)
         res.status(200).send({directions: directions.data})
       })
+      .catch(err => console.log("err", err))
   })
 
   app.post('/api/send-email', function (req, res) {
