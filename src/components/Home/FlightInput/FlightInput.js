@@ -14,6 +14,7 @@ import { Button, Icon } from 'semantic-ui-react';
 
 //Smooth Scroll
 import scrollToComponent from 'react-scroll-to-component';
+//Smooth Scroll
 
 const Padder = styled.div`
       max-width: 90vw;
@@ -144,13 +145,13 @@ export default class FlightInput extends Component {
 // }
 
   render() {
-      scrollToComponent(this.refs.Scrolly, {
-    offset: 1000,
-    align: 'top',
-    duration: 1500
-});
+//       scrollToComponent(this.refs.Scrolly, {
+//     offset: 1000,
+//     align: 'top',
+//     duration: 1000
+// });
     return (
-      <div ref='Scrolly'>
+      <div>
         <Padder>What's the final flight number?
           <FlightInputBox>
             <Input placeholder="Example: DL1234"  maxlength="10" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />

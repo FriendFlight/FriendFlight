@@ -14,6 +14,11 @@ import theme from '../../components/Theme.js';
 
 import logo from './ridemindurLogo.svg';
 
+
+//Smooth Scroll
+import scrollToComponent from 'react-scroll-to-component';
+//Smooth Scroll
+
     const Logo = styled.img`
       height: 15em;
       margin: 0 auto;
@@ -127,12 +132,17 @@ getFlight(url){
 
   render()
   {
+    scrollToComponent(this.refs.Scrolly, {
+        offset: 2000,
+        align: 'bottom',
+        duration: 1000
+        });
     let userFirstName
     if (this.state.user.name){
         userFirstName = this.state.user.name.givenName
       }
     const isLoggedIn = (
-      <Text>
+      <Text ref='Scrolly'>
         <Padder style={{ color: "#ff853d"  }}>You're logged in, {userFirstName}. 
           <br/>
           Let's plan your trip!
