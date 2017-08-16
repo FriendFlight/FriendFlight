@@ -12,6 +12,9 @@ import theme from '../../../components/Theme.js';
 import { Button, Icon } from 'semantic-ui-react';
 //Semantic UI
 
+//Smooth Scroll
+import scrollToComponent from 'react-scroll-to-component';
+
 const Padder = styled.div`
       max-width: 90vw;
       margin: 0 auto;
@@ -52,6 +55,13 @@ const SubmitButton = styled.button`
       cursor: pointer;
       font-size: .75em;
       border-radius: 6px;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      &:hover${SubmitButton}{
+          background-color: #ff835d;
+          border: 1px solid #ff835d;
+          color: white;
+      }
 `
     const Spacer5 = styled.div`
     margin-top: 5vh;
@@ -129,9 +139,18 @@ export default class FlightInput extends Component {
 
     }
 
+// componentDidMount() {
+//   window.scrollTo(0, 700)
+// }
+
   render() {
+      scrollToComponent(this.refs.Scrolly, {
+    offset: 1000,
+    align: 'top',
+    duration: 1500
+});
     return (
-      <div>
+      <div ref='Scrolly'>
         <Padder>What's the final flight number?
           <FlightInputBox>
             <Input placeholder="Example: DL1234"  maxlength="10" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />

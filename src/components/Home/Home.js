@@ -133,7 +133,7 @@ getFlight(url){
       }
     const isLoggedIn = (
       <Text>
-        <Padder>You're logged in, {userFirstName}. 
+        <Padder style={{ color: "#ff853d"  }}>You're logged in, {userFirstName}. 
           <br/>
           Let's plan your trip!
         </Padder>
@@ -159,7 +159,7 @@ getFlight(url){
         <Logo src={logo}></Logo>
         <Spacer5/>
           <Padder>
-            <Text>Ridemindur gets you to the airport just in time to pick them up. Get to the airport right on time, every time.</Text > 
+            <Text>Roominder gets you to the airport just in time to pick them up. Hop to it on time, every time.</Text > 
              <Spacer10/>
           </Padder>
         <Login user= {this.state.user}/>
