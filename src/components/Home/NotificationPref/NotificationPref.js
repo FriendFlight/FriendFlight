@@ -42,6 +42,17 @@ const YesNoButton = styled.button`
       cursor: pointer;
       font-size: .75em;
 `
+const SubmitButton = styled.button`
+      background-color: white;
+      height: 5vh;
+      width: 30vw;
+      margin-top: 10px;
+      border: 1px solid #616161;
+      color: #616161;
+      cursor: pointer;
+      font-size: .75em;
+      border-radius: 6px;
+`
 
 const Spacer5 = styled.div`
     margin-top: 5vh;
@@ -209,14 +220,13 @@ export default class NotificationPref extends Component {
   {
     const messageParagraph=(<div>
       <h2>Awesome! We'll message you via{this.adaptiveParagraph()}10 minutes before you should
-        leave for the airport. Would you like a reminder to be sent the morning of
-        the pickup as well? </h2>
-      <YesNoButton onClick={() => {
+        leave. Want a reminder the morning of as well? </h2>
+      <SubmitButton onClick={() => {
         this.props.show()
-        this.finalizeInfo(true)}}>Yes</YesNoButton>
-      <YesNoButton onClick={() => {
+        this.finalizeInfo(true)}}>Sure!</SubmitButton>
+      <SubmitButton onClick={() => {
         this.props.show()
-        this.finalizeInfo(false)}}>No</YesNoButton>
+        this.finalizeInfo(false)}}>Meh...</SubmitButton>
         <SpacerH7/>
     </div>)
 
@@ -235,8 +245,7 @@ export default class NotificationPref extends Component {
   
         
         <br />
-        {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:null}
-        <SpacerH30/>
+        {this.validPhone(this.state.phoneNumNum)|| this.validateEmail(this.state.email)? messageParagraph:(<SpacerH30/>)}        
       </Padder>
     );
   }

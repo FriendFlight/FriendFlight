@@ -145,14 +145,14 @@ getFlight(url){
                           display={this.state.displayNotifications}
                           airportIndex={this.state.airportIndex}
                           show={this.showDrive}
-                          shortURL={this.state.shortURL}/>
+                          shortURL={this.state.shortURL}
+                          displayNotifications={this.state.displayNotifications}/>
         <Spacer10/>
         <br />
         <DriveDisplay flight={this.state.flight}
                       display={this.state.driveDisplay}
                       airportIndex={this.state.airportIndex}/>
       </Text>
-
     )
     return (
       <div className="home">
