@@ -147,6 +147,8 @@ export default class FlightInput extends Component {
         <Spacer75/>
         <Padder>Can we use your location?
           <SubmitButton onClick={() => {
+            if(!this.state.flightNumLetters || !this.state.flightWholeDate)
+              return
             this.props.show()
             this.sendTripInfo()
             }}>Go for it!
@@ -160,6 +162,8 @@ export default class FlightInput extends Component {
         </Padder>
         <Padder>
           <SubmitButton onClick={() => {
+            if(!this.state.flightNumLetters || !this.state.flightWholeDate)
+              return
             this.props.show()
             this.sendTripInfo()
             }}>Submit

@@ -62,7 +62,6 @@ componentDidMount(){
   })
 
 }
-
 showNotifications(){
   this.setState({
     displayNotifications:'block'
@@ -75,26 +74,35 @@ showDrive(){
 }
 getFlight(url){
   axios.get(url)
-  .then(res=>
-  {
+  .then(res=> {
+    console.log("OK", res.data.directions.routes[0])
     if((res.data.directions.routes[0].legs[0].distance.value / 1760) > 100) {
       this.setState({
         airportIndex: this.state.airportIndex + 1
       })
       axios.get(`/api/new-location/${res.data.location}/${res.data.info[0].appendix.airports[this.state.airportIndex].name}`)
         .then(newResponse => {
-          console.log("Old", res.data)
+          if(newResponse.data.directions.routes.length === 0) {
+            console.log("Cannot get route!")
+            this.setState({
+              flight: '',
+              airportIndex: 0,
+            })
+            return
+          }
+          console.log("oldish data", res.data)
+          console.log("response from server", newResponse.data)
           let newFlight = Object.assign({}, res.data, newResponse.data)
           console.log("Building shortenedURL", newFlight)
           axios.post(`https://www.googleapis.com/urlshortener/v1/url?key=${config.googleShortener}`,
-            {"longUrl": `https://www.google.com/maps/dir/Current+Location/${newFlight.directions.routes[0].legs[0].end_location.lat},${newFlight.directions.routes[0].legs[0].end_location.lng}`})
+            {"longUrl": `https://www.google.com/maps/dir/Current+Location/${newFlight.directions.routes[0].legs[0].end_location.lat},${newFlight.directions.routes[0].legs[0].end_location.lng}`
+            })
             .then(response => {
               console.log("shortened URL:", response.data.id)
               this.setState({
                 shortURL: response.data.id
               })
             })
-          console.log("new", newFlight)
           this.setState({
             flight: newFlight
           })
