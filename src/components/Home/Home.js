@@ -230,7 +230,7 @@ getFlight(url){
         <Logo src={logo}></Logo>
         <Spacer5/>
           <Padder>
-            <Text>Roominder gets you to the airport just in time to pick them up. Hop to it on time, every time.</Text > 
+            <Text>RooMinder gets you to the airport just in time to pick them up. Hop to it on time, every time.</Text > 
              <Spacer10/>
           </Padder>
         <Login user= {this.state.user}/>
