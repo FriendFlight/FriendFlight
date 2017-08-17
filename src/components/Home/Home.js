@@ -62,8 +62,8 @@ import scrollToComponent from 'react-scroll-to-component';
     height: 10vh;
     padding-top: 10px;
     `
-  const Spacer03 = styled.div`
-    margin-top: -3vh;
+  const Spacer12 = styled.div`
+    margin-top: 12vh;
     `
 
 
@@ -210,7 +210,7 @@ getFlight(url){
         show={this.showNotifications} flight={this.getFlight} 
         buttonDisabled={this.state.buttonDisabled} toggleButton={this.toggleButton}/>
         {/*<button onClick={this.handleVisibility}>Press me</button>*/}
-        <Spacer03/>
+        <Spacer12/>
         <NotificationPref user={this.state.user}
                           flight={this.state.flight}
                           display={this.state.displayNotifications}
