@@ -35,7 +35,7 @@ export default class DriveDisplay extends Component {
     return (
       <div style={{'display': `${this.props.display}`}}>
         {this.props.flight?(<div>
-          <Padder>Awesome, we'll message you the day of your drive.</Padder>
+          <Padder style={{ color: "#ff835d", fontWeight: 'bold'  }}>Awesome, we'll message you the day of your drive.</Padder>
           <Padder>Your drive will take about {this.props.flight.directions.routes[0].legs[0].duration.text} and cover {this.props.flight.directions.routes[0].legs[0].distance.text}.</Padder>
           <Padder>Here's the fastest route to {this.props.flight.info[0].appendix.airports[this.props.airportIndex].name} from your location. </Padder>
           {googleMap}

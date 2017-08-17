@@ -24,44 +24,48 @@ import sadKangaroo from './RoominderSadLogo.png'
 import scrollToComponent from 'react-scroll-to-component';
 //Smooth Scroll
 
-    const Logo = styled.img`
+  const Logo = styled.img`
       height: 15em;
       margin: 0 auto;
       display: block;
       margin-top: 10vh;
     `
-    const LogoSmall = styled.img`
+  const LogoSmall = styled.img`
       height: 50px;
       margin: 0 auto;
       display: block;
 
     `
-    const SadKangaroo = styled.img`
+  const SadKangaroo = styled.img`
       width: 275px;
       margin: 0 auto;
       display: block;
     `
 
-    const Text = styled.text`
+  const Text = styled.text`
       margin: 0 auto;
       font-size: 1.25em;
       font-color: #616161;
     `
-    const Padder = styled.div`
+  const Padder = styled.div`
       max-width: 90vw;
       margin: 0 auto;
       text-align: center;
     `
-    const Spacer5 = styled.div`
+  const Spacer5 = styled.div`
     margin-top: 5vh;
     `
-    const Spacer10 = styled.div`
+  const Spacer10 = styled.div`
     margin-top: 10vh;
     `
-    const Spacer10H = styled.div`
+  const Spacer10H = styled.div`
     height: 10vh;
     padding-top: 10px;
     `
+  const Spacer03 = styled.div`
+    margin-top: -3vh;
+    `
+
 
 export default class Home extends Component 
 {
@@ -90,7 +94,6 @@ componentDidMount(){
     this.setState({
       user:response.data
     })
-    console.log("Component did mount!")
     scrollToComponent(this.Home, {
     offset: 0,
     align: 'bottom',
@@ -194,9 +197,9 @@ getFlight(url){
       }
     const isLoggedIn = (
       <Text>
-        <Padder style={{ color: "#ff835d"  }}>You're logged in, {userFirstName}. 
+        <Padder style={{ color: "#ff835d", fontWeight: 'bold'  }}>You're logged in, {userFirstName}. 
           <br/>
-          Let's plan your trip!
+          Let's plan your drive!
         </Padder>
         <Spacer10H>
           <Transition.Group animation= { this.state.visible?'fly right':'fly left'} duration={500}>
@@ -207,7 +210,7 @@ getFlight(url){
         show={this.showNotifications} flight={this.getFlight} 
         buttonDisabled={this.state.buttonDisabled} toggleButton={this.toggleButton}/>
         {/*<button onClick={this.handleVisibility}>Press me</button>*/}
-        <Spacer10/>
+        <Spacer03/>
         <NotificationPref user={this.state.user}
                           flight={this.state.flight}
                           display={this.state.displayNotifications}
@@ -243,10 +246,10 @@ getFlight(url){
           }}
           contentLabel="Bad Route">
           <Text>
-            Cannot get route!
+            Cannot get route!<br/> Hop on over to your flight info and make sure the flight lands on the same continent as you.
           </Text>
           <Spacer5/>
-          <SadKangaroo src={sadKangaroo}/>
+          <SadKangaroo style= {{ paddingRight: '10px', maxHeight: '30vh', width: 'auto' }} src={sadKangaroo}/>
         </Modal>
       </div>
     )

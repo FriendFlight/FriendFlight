@@ -163,7 +163,8 @@ export default class FlightInput extends Component {
           </DateSelect>
         </Padder>
         <Spacer75/>
-        <Padder>Can we use your location?
+        <Padder>Can we use your location?</Padder>
+        <Padder>        
           <SubmitButton onClick={() => {
             if(!this.state.flightNumLetters || !this.state.flightWholeDate || this.props.buttonDisabled)
               return
