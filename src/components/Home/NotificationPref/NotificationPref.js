@@ -15,7 +15,7 @@ const Padder = styled.div`
       text-align: center;
     `
     
-const ContactInputBox = styled.div`
+const ContactInputBox = styled.input`
       background-color: white;
       border: 1px solid #616161;
       padding: 5px;
@@ -249,13 +249,9 @@ export default class NotificationPref extends Component {
     return (
       <Padder style={{'display': `${this.props.display}`}}>
         <h2>For text notifications provide a number.</h2>
-        <ContactInputBox>
-          <input onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888"/>{this.state.phoneNumNum?this.state.valPhone:null}
-        </ContactInputBox>
+        <ContactInputBox onChange={(e)=>{this.handleNumNumChange(e.target.value)}} placeholder="888-888-8888" />{this.state.phoneNumNum?this.state.valPhone:null}
         <h2>For email notifications provide an email.</h2>
-        <ContactInputBox>
-          <input onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
-        </ContactInputBox>
+        <ContactInputBox onChange={(e)=>{this.handleEmailChange(e.target.value)}} placeholder="example@email.com"/>{this.state.email ? this.state.valEmail:null}
         {/*<SpacerH30 style={{'display': `${this.state.showSpacer}`}}/>*/}
         
   
