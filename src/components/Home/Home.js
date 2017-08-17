@@ -194,9 +194,9 @@ getFlight(url){
       }
     const isLoggedIn = (
       <Text>
-        <Padder style={{ color: "#ff835d"  }}>You're logged in, {userFirstName}. 
+        <Padder style={{ color: "#ff835d", fontWeight: 'bold'  }}>You're logged in, {userFirstName}. 
           <br/>
-          Let's plan your trip!
+          Let's plan your drive!
         </Padder>
         <Spacer10H>
           <Transition.Group animation= { this.state.visible?'fly right':'fly left'} duration={500}>
@@ -243,10 +243,10 @@ getFlight(url){
           }}
           contentLabel="Bad Route">
           <Text>
-            Cannot get route!
+            Cannot get route!<br/> Hop on over to your flight info and make sure the flight lands on the same continent as you.
           </Text>
           <Spacer5/>
-          <SadKangaroo src={sadKangaroo}/>
+          <SadKangaroo style= {{ paddingRight: '10px', maxHeight: '30vh', width: 'auto' }} src={sadKangaroo}/>
         </Modal>
       </div>
     )

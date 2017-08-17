@@ -19,8 +19,8 @@ const Padder = styled.div`
 
 const Map = styled.div`
       
-      max-width: 600px;
-      height:50vh;
+      max-width: ;
+      height:48vh;
       margin: 10px;
       margin-top:20px;
     `
@@ -79,7 +79,7 @@ export default class GoogleMap extends Component {
         url="https://maps.googleapis.com/maps/api/js"
         onLoad={this.initMap.bind(this)}
       />
-      <Map className="map" id="map"></Map>
+      <Map className="map" id="map" style={{ boxShadow: '5px 5px 5px #888888' }}></Map>
     </div>
   }
 }
