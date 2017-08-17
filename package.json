@@ -23,6 +23,7 @@
     "react-router-dom": "^4.1.2",
     "react-scroll-to-component": "^1.0.1",
     "react-smooth-scroll": "^0.1.0",
+    "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.71.4",
     "sendmail": "^1.2.0",
     "styled-components": "^2.1.2",

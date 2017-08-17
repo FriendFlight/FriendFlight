@@ -94,6 +94,7 @@ export default class FlightInput extends Component {
       flightMonth: '',
       flightDay: '',
       flight: [],
+      buttonDisabled: false
     }
     this.handleFlightNumberChange = this.handleFlightNumberChange.bind(this);
     this.handleFlightDateChange = this.handleFlightDateChange.bind(this);
@@ -164,10 +165,11 @@ export default class FlightInput extends Component {
         <Spacer75/>
         <Padder>Can we use your location?
           <SubmitButton onClick={() => {
-            if(!this.state.flightNumLetters || !this.state.flightWholeDate)
+            if(!this.state.flightNumLetters || !this.state.flightWholeDate || this.props.buttonDisabled)
               return
             this.sendTripInfo()
-            }}>Go for it!
+            this.props.toggleButton()
+            }}>Go for it
           </SubmitButton>
         </Padder>
           <Spacer75/>
@@ -178,9 +180,11 @@ export default class FlightInput extends Component {
         </Padder>
         <Padder>
           <SubmitButton onClick={() => {
-            if(!this.state.flightNumLetters || !this.state.flightWholeDate)
+            if(!this.state.flightNumLetters || !this.state.flightWholeDate  || this.props.buttonDisabled)
               return
-            this.sendTripInfo()}
+            this.sendTripInfo()
+            this.props.toggleButton()
+            }
           }>Submit
           </SubmitButton>
         </Padder>

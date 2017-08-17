@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import axios from 'axios'
 import config from '../config'
 import Modal from 'react-modal'
-// import "./Home.css";
+import { Transition } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
 import Login from './Login/Login';
 import FlightInput from './FlightInput/FlightInput';
@@ -29,6 +30,12 @@ import scrollToComponent from 'react-scroll-to-component';
       display: block;
       margin-top: 10vh;
     `
+    const LogoSmall = styled.img`
+      height: 50px;
+      margin: 0 auto;
+      display: block;
+
+    `
     const SadKangaroo = styled.img`
       width: 275px;
       margin: 0 auto;
@@ -51,6 +58,10 @@ import scrollToComponent from 'react-scroll-to-component';
     const Spacer10 = styled.div`
     margin-top: 10vh;
     `
+    const Spacer10H = styled.div`
+    height: 10vh;
+    padding-top: 10px;
+    `
 
 export default class Home extends Component 
 {
@@ -63,11 +74,14 @@ export default class Home extends Component
       flight: '',
       airportIndex: 0,
       shortURL: '',
-      hasBadRoute: false
+      hasBadRoute: false,
+      visible: false,
+      buttonDisabled: false
     }
     this.showNotifications = this.showNotifications.bind(this);
     this.showDrive = this.showDrive.bind(this);
     this.getFlight=this.getFlight.bind(this);
+    this.toggleButton = this.toggleButton.bind(this);
   }
 
 
@@ -85,7 +99,16 @@ componentDidMount(){
   })
 
 }
+
+toggleButton(){
+  this.setState({
+    buttonDisabled: true
+  })
+}
+
+handleVisibility = () => this.setState({ visible: !this.state.visible })
 showNotifications(){
+
   this.setState({
     displayNotifications:'block'
   })
@@ -102,6 +125,7 @@ showDrive(){
   })
   
 }
+
 getFlight(url){
   axios.get(url)
   .then(res=> {
@@ -117,7 +141,8 @@ getFlight(url){
             this.setState({
               flight: '',
               airportIndex: 0,
-              hasBadRoute: true
+              hasBadRoute: true,
+              buttonDisabled: false
             })
             return
           }
@@ -173,8 +198,15 @@ getFlight(url){
           <br/>
           Let's plan your trip!
         </Padder>
-        <Spacer10/>
-        <FlightInput ref="flightInput" user={this.state.user} show={this.showNotifications} flight={this.getFlight}/>
+        <Spacer10H>
+          <Transition.Group animation= { this.state.visible?'fly right':'fly left'} duration={500}>
+            { this.state.visible&& <LogoSmall src={logo}/>}
+          </Transition.Group>
+        </Spacer10H>
+        <FlightInput ref="flightInput" user={this.state.user} 
+        show={this.showNotifications} flight={this.getFlight} 
+        buttonDisabled={this.state.buttonDisabled} toggleButton={this.toggleButton}/>
+        {/*<button onClick={this.handleVisibility}>Press me</button>*/}
         <Spacer10/>
         <NotificationPref user={this.state.user}
                           flight={this.state.flight}
