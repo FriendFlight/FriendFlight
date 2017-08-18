@@ -18,11 +18,14 @@ const Padder = styled.div`
     `
 
 const Map = styled.div`
-      
       max-width: ;
       height:48vh;
       margin: 10px;
       margin-top:20px;
+       @media ( min-width: 1000px ) {
+         height:70vh;
+       }
+
     `
 export default class GoogleMap extends Component {
 

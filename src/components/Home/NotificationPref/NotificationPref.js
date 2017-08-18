@@ -13,6 +13,9 @@ const Padder = styled.div`
       max-width: 90vw;
       margin: 0 auto;
       text-align: center;
+      @media ( min-width: 1000px ) {
+        padding-top: 5vw;
+      }
     `
     
 const ContactInputBox = styled.input`
@@ -23,7 +26,6 @@ const ContactInputBox = styled.input`
       max-height: 45px; 
       font-size: 1em;
       color: #616161;
-      cursor: pointer;
       font-family: 'Lato', sans-serif;
       margin: 0 auto;
       margin-top: 10px;
@@ -51,6 +53,9 @@ const YesNoButton = styled.button`
           color: white;
       }
 `
+      // @media ( min-width: 1000px ) {
+      //   max-width: 10vw;
+      // }
 const SubmitButton = styled.button`
       background-color: white;
       height: 5vh;
@@ -67,6 +72,11 @@ const SubmitButton = styled.button`
           background-color: #ff835d;
           border: 1px solid #ff835d;
           color: white;
+      }
+      @media ( min-width: 1000px ) {
+        max-width: 10vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
       }
 `
 

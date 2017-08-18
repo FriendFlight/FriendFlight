@@ -29,6 +29,9 @@ import scrollToComponent from 'react-scroll-to-component';
       margin: 0 auto;
       display: block;
       margin-top: 10vh;
+      @media (min-width : 1000px){
+       margin-bottom: 5vh;
+      }
     `
   const LogoSmall = styled.img`
       height: 50px;
@@ -45,7 +48,12 @@ import scrollToComponent from 'react-scroll-to-component';
   const Text = styled.text`
       margin: 0 auto;
       font-size: 1.25em;
-      font-color: #616161;
+      color: #616161;
+      @media (min-width : 1000px){
+        font-size: 2em;
+        margin-top: 5vh;
+
+      }
     `
   const Padder = styled.div`
       max-width: 90vw;
@@ -54,16 +62,39 @@ import scrollToComponent from 'react-scroll-to-component';
     `
   const Spacer5 = styled.div`
     margin-top: 5vh;
+    @media (min-width : 1000px){
+       display: none;
+      }
     `
   const Spacer10 = styled.div`
     margin-top: 10vh;
+    @media (min-width : 1000px){
+       display: none;
+      }
     `
   const Spacer10H = styled.div`
     height: 10vh;
     padding-top: 10px;
+    @media (min-width : 1000px){
+       display: none;
+      }
     `
   const Spacer12 = styled.div`
     margin-top: 12vh;
+    @media (min-width : 1000px){
+       display: none;
+      }
+    `
+
+  const OrangeWelcome = styled.div`
+    max-width: 90vw;
+    margin: 0 auto;
+    text-align: center;
+    @media (min-width : 1000px){
+      padding-top: 5vh;
+      padding-bottom: 5vh;
+      margin-top: 5vh;
+    }  
     `
 
 
@@ -197,10 +228,10 @@ getFlight(url){
       }
     const isLoggedIn = (
       <Text>
-        <Padder style={{ color: "#ff835d", fontWeight: 'bold'  }}>You're logged in, {userFirstName}. 
+        <OrangeWelcome style={{ color: "#ff835d", fontWeight: 'bold'  }}>You're logged in, {userFirstName}. 
           <br/>
           Let's plan your drive!
-        </Padder>
+        </OrangeWelcome>
         <Spacer10H>
           <Transition.Group animation= { this.state.visible?'fly right':'fly left'} duration={500}>
             { this.state.visible&& <LogoSmall src={logo}/>}

@@ -21,6 +21,16 @@ const Padder = styled.div`
       margin: 0 auto;
       text-align: center;
     `
+const Manually = styled.div`
+      max-width: 90vw;
+      margin: 0 auto;
+      text-align: center;
+       @media (min-width : 1000px){
+        font-size: .5em;
+      }
+    `
+
+
 const FlightInputBox = styled.div`
       background-color: white;
       border: 1px solid #616161;
@@ -28,7 +38,6 @@ const FlightInputBox = styled.div`
       width: 50vw;
       font-size: 1em;
       color: #616161;
-      cursor: pointer;
       font-family: 'Lato', sans-serif;
       margin: 0 auto;
       margin-top: 10px;
@@ -36,16 +45,60 @@ const FlightInputBox = styled.div`
       overflow: hidden;
       height: 36px;
 `
+const Input = styled.input`
+      text-align: center;
+      width: 50vw;
+      border: 1px solid #616161;
+      padding: 5px;
+      font-size: 1em;
+      margin: 0 auto;
+      margin-top: 10px;
+      text-align: center;
+      overflow: hidden;
+      font-family: 'Lato', sans-serif;
+      color: #616161;
+      @media (min-width : 1000px){
+        width: 27vw;
+        margin-left: 3vw;
+      }
+`
+const ManualContainer = styled.div`
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 10px;
+      padding: 0 10px;
+      @media (min-width : 1000px) {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+      }
+  `
+const ManualInput = styled.input`
+      text-align: center;
+      width: 50vw;
+      border: 1px solid #616161;
+      padding: 5px;
+      font-size: 1em;
+      margin: 0 auto;
+      text-align: center;
+      overflow: hidden;
+      font-family: 'Lato', sans-serif;
+      color: #616161;
+      @media (min-width : 1000px){
+        width: 12vw;
+        font-size: .75em;
+        margin-left:1vw;
+        display: inline-block;
+        height: 25px;
+      }
+`
+
 const DateSelect = FlightInputBox.extend`
       font-size:.9em;
 `
 
-const Input = styled.input`
-      text-align: center;
-      width: 100%;
-      font-family: 'Lato', sans-serif;
-      color: #616161;
-`
+
 const SubmitButton = styled.button`
       background-color: white;
       height: 5vh;
@@ -63,12 +116,60 @@ const SubmitButton = styled.button`
           border: 1px solid #ff835d;
           color: white;
       }
+      @media( min-width: 1000px) {
+        width:10vw;
+        display: inline-block;
+        margin-left: 3vw;
+      }
 `
+
+const SubmitManualButton = styled.button`
+      background-color: white;
+      height: 5vh;
+      width: 30vw;
+      border: 1px solid #616161;
+      color: #616161;
+      cursor: pointer;
+      font-size: .75em;
+      border-radius: 6px;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+      &:hover${SubmitManualButton}{
+          background-color: #ff835d;
+          border: 1px solid #ff835d;
+          color: white;
+      }
+      @media( min-width: 1000px) {
+        width:8vw;
+        display: inline-block;
+        margin-left: 1vw;
+        font-size: .75em;
+        height: 3vh;
+      }
+      `
+
+
+
+
     const Spacer5 = styled.div`
     margin-top: 5vh;
     `
     const Spacer75 = styled.div`
     margin-top: 7.5vh;
+    `
+    const SpecialSpacer75 = styled.div`
+    margin-top: 7.5vh;
+    @media( min-width: 1000px) {
+      margin-top: 3vh;
+    }
+    
+    `
+    const SpecialSpacer3 = styled.div`
+    @media( min-width: 100px) {
+      margin-top:3vh;
+
+    }
+    
     `
     const Spacer10 = styled.div`
     margin-top: 10vh;
@@ -152,19 +253,14 @@ export default class FlightInput extends Component {
     return (
       <div>
         <Padder >What's the final flight number?
-          <FlightInputBox>
             <Input placeholder="Example: DL1234"  maxlength="10" onChange={(event) => { this.handleFlightNumberChange(event.target.value) }} />
-          </FlightInputBox>
         </Padder>
           <Spacer75/>
         <Padder>What day does the flight land?
-          <DateSelect>
             <Input type="date" placeholder="MM/DD/YYYY" onChange={(event) => { this.handleFlightDateChange(event.target.value) }} />
-          </DateSelect>
         </Padder>
         <Spacer75/>
-        <Padder>Can we use your location?</Padder>
-        <Padder>        
+        <Padder>Can we use your location?
           <SubmitButton onClick={() => {
             if(!this.state.flightNumLetters || !this.state.flightWholeDate || this.props.buttonDisabled)
               return
@@ -173,21 +269,25 @@ export default class FlightInput extends Component {
             }}>Go for it
           </SubmitButton>
         </Padder>
-          <Spacer75/>
-        <Padder>Or manually enter your address
-          <FlightInputBox>
-            <Input placeholder="Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
-          </FlightInputBox>
-        </Padder>
-        <Padder>
-          <SubmitButton onClick={() => {
+        
+          <SpecialSpacer75/>
+        <Manually>Or manually enter your address.
+          <ManualContainer>
+            <ManualInput placeholder="Enter Address" onChange={(event) => { this.handleAddressChange(event.target.value) }} />
+              <SubmitManualButton onClick={() => {
             if(!this.state.flightNumLetters || !this.state.flightWholeDate  || this.props.buttonDisabled)
               return
             this.sendTripInfo()
             this.props.toggleButton()
             }
           }>Submit
-          </SubmitButton>
+          </SubmitManualButton>
+          </ManualContainer>
+            
+        </Manually>
+        <Padder>
+          <SpecialSpacer3/>
+          
         </Padder>
       </div>
     );
