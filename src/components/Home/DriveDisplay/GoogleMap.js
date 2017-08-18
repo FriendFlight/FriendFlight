@@ -23,7 +23,7 @@ const Map = styled.div`
       margin: 10px;
       margin-top:20px;
        @media ( min-width: 1000px ) {
-         height:60vh;
+         height:70vh;
        }
 
     `
