@@ -160,12 +160,12 @@ massive(config.connectionString).then(dbInstance => {
       })
     })
   })
+  
+  app.get('*', (req, res) => {
+      console.log(__dirname + '/build/index.html');
+      res.sendFile(path.join(__dirname, '/build/index.html'))
+    });
 
 })
-
-app.get('*', (req, res) => {
-		console.log(__dirname + '/build/index.html');
-		res.sendFile(path.join(__dirname, '/build/index.html'))
-	});
 
 app.listen(config.port, console.log(`Listening on port ${config.port}...`))
