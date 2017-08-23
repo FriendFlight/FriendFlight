@@ -51,11 +51,11 @@ const LogoutButton = LoginButton.extend`
 
 export default class Login extends Component {
   render() {
-    const login = (<a href="http://localhost:3001/auth">
+    const login = (<a href="/auth">
       <LoginButton>Login</LoginButton>
     </a>)
 
-    const logout = (<a href="http://localhost:3001/auth/logout">
+    const logout = (<a href="/auth/logout">
       <LogoutButton>Logout</LogoutButton>
     </a>)
 
@@ -68,3 +68,4 @@ export default class Login extends Component {
     );
   }
 }
+

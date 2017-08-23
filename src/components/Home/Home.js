@@ -146,6 +146,7 @@ export default class Home extends Component
 
   componentDidMount(){
     axios.get("/auth/me").then(response=>{
+	console.log("bug", response.data);
       this.setState({
         user:response.data
       })

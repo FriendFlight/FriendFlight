@@ -9,10 +9,11 @@ const twilio = require('twilio');
 const client = new twilio(config.twilio.accountSid, config.twilio.authToken);
 const schedule = require('node-schedule');
 const axios = require('axios');
-
+const path = require('path');
 const app = express()
 
 app.use(bodyParser.json())
+app.use(express.static(__dirname + '/build'));
 
 //Emailer client test
 
@@ -55,11 +56,11 @@ massive(config.connectionString).then(dbInstance => {
 
   app.get('/auth', passport.authenticate('auth0'))
 
-  app.get('/auth/callback', passport.authenticate('auth0', {successRedirect: 'http://localhost:3000/'}))
+  app.get('/auth/callback', passport.authenticate('auth0', {successRedirect: '/'}))
 
   app.get('/auth/me', function (req, res) {
     if (!req.user)
-      return res.status(200).send("");
+      return res.status(200).json(false);
     console.log("user", req.user.displayName)
     res
       .status(200)
@@ -68,7 +69,7 @@ massive(config.connectionString).then(dbInstance => {
 
   app.get('/auth/logout', function (req, res) {
     req.logout();
-    res.redirect('http://localhost:3000/');
+    res.redirect('/');
   })
 
   app.post('/api/flight', function (req, res) {
@@ -161,5 +162,10 @@ massive(config.connectionString).then(dbInstance => {
   })
 
 })
+
+app.get('*', (req, res) => {
+		console.log(__dirname + '/build/index.html');
+		res.sendFile(path.join(__dirname, '/build/index.html'))
+	});
 
 app.listen(config.port, console.log(`Listening on port ${config.port}...`))
