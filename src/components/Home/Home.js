@@ -236,7 +236,7 @@ export default class Home extends Component
         </Padder>
         <Spacer10H>
           <Transition animation={'bounce'} duration={500} visible={this.state.visible}>
-            <LogoSmall className="loading-kangaroo" src={logo}/>
+            <LogoSmall className="loading-kangaroo mobile-only" src={logo}/>
           </Transition>
         </Spacer10H>
         <FlightInput ref="flightInput" user={this.state.user}
