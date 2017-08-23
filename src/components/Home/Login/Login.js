@@ -19,10 +19,14 @@ const LoginButton = styled.div`
       border-radius: 6px;
       -webkit-transition-duration: 0.4s;
       transition-duration: 0.4s;
-      &:hover${LoginButton}{
+        &:hover${LoginButton}{
           background-color: #ff835d;
           border: 1px solid #ff835d;
-          color: white;}
+          color: white;};
+      @media (min-width : 500px){
+        margin-top: 5vh;
+        
+      }
     `
 const LogoutButton = LoginButton.extend`
       top: -55px;
@@ -34,7 +38,13 @@ const LogoutButton = LoginButton.extend`
       &:hover${LogoutButton}{
           background-color: #ff835d;
           border: 1px solid #ff835d;
-          color: white;}
+          color: white;};
+           @media (min-width : 500px){
+             top: 15px;
+             right: 25px;
+             width: 10vw;
+             margin-top: 0;
+      }
     `
 
 
@@ -42,11 +52,11 @@ const LogoutButton = LoginButton.extend`
 export default class Login extends Component {
   render() {
     const login = (<a href="http://localhost:3001/auth">
-      <LoginButton id="login">Login</LoginButton>
+      <LoginButton>Login</LoginButton>
     </a>)
 
     const logout = (<a href="http://localhost:3001/auth/logout">
-      <LogoutButton id="login">Logout</LogoutButton>
+      <LogoutButton>Logout</LogoutButton>
     </a>)
 
     return (
