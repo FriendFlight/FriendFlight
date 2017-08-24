@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapsLoader from 'google-maps'
 import scrollToComponent from 'react-scroll-to-component';
+import config from './../../config.js';
 // import './GoogleMap.css'
 
 import Script from 'react-load-script'

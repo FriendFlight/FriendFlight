@@ -16,7 +16,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../components/Theme.js';
 
 import logo from './ridemindurLogo.svg';
-import sadKangaroo from './RoominderSadLogo.png'
+import sadKangaroo from './RoominderSadLogo.png';
 
 //ref={(section) => { this.Padder = section; }}
 // onClick={() => scrollToComponent(this.Padder, {offset: 0, align: 'bottom', duration: 1000}) }
@@ -89,6 +89,7 @@ const Spacer12 = styled.div`
     `
 
   const OrangeWelcome = styled.div`
+    font-family: 'Lato', sans-serif;
     max-width: 90vw;
     margin: 0 auto;
     text-align: center;
@@ -146,8 +147,8 @@ export default class Home extends Component
 
   componentDidMount(){
     axios.get("/auth/me").then(response=>{
-	console.log("bug", response.data);
       this.setState({
+
         user:response.data
       })
       scrollToComponent(this.Home, {
