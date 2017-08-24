@@ -56,7 +56,7 @@ massive(config.connectionString).then(dbInstance => {
 
   app.get('/auth', passport.authenticate('auth0'))
 
-  app.get('/auth/callback', passport.authenticate('auth0', {successRedirect: '/'}))
+  app.get('/auth/callback', passport.authenticate('auth0', {successRedirect: 'https://roominder.me/'}))
 
   app.get('/auth/me', function (req, res) {
     if (!req.user)
@@ -69,7 +69,7 @@ massive(config.connectionString).then(dbInstance => {
 
   app.get('/auth/logout', function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect('https://roominder.me/');
   })
 
   app.post('/api/flight', function (req, res) {
